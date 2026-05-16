@@ -71,7 +71,14 @@ class MedGemma:
     def _load_mlx(self) -> None:
         from mlx_vlm import load
 
-        self._model, self._processor = load(CONFIG.medgemma.mlx_model_id)
+        from cxr.config import PROJECT_ROOT
+
+        # Use locally downloaded weights if present, else treat as an HF repo id.
+        ref = CONFIG.medgemma.mlx_model_id
+        local = PROJECT_ROOT / ref
+        model_ref = str(local) if local.exists() else ref
+
+        self._model, self._processor = load(model_ref)
         self._cfg = self._model.config
 
     def _load_transformers(self) -> None:
@@ -105,8 +112,16 @@ class MedGemma:
     def _generate_mlx(
         self, prompt: str, image: Image.Image | None, system_prompt: str, max_new_tokens: int
     ) -> str:
+        import mlx.core as mx
         from mlx_vlm import generate
         from mlx_vlm.prompt_utils import apply_chat_template
+
+        # Release cached GPU buffers before a (memory-heavy) multimodal pass -
+        # on an 8GB M1 this avoids paging that can trip the Metal GPU watchdog.
+        try:
+            mx.clear_cache()
+        except Exception:  # noqa: BLE001 - older mlx lacks this; harmless
+            pass
 
         images = [image] if image is not None else []
         full_prompt = f"{system_prompt}\n\n{prompt}" if system_prompt else prompt
@@ -122,8 +137,15 @@ class MedGemma:
             temperature=CONFIG.medgemma.temperature,
             verbose=False,
         )
-        # mlx-vlm returns either a string or a (text, stats) tuple by version.
-        return (result[0] if isinstance(result, tuple) else result).strip()
+        # mlx-vlm's return type varies by version: a GenerationResult (with
+        # a .text attribute), a (text, stats) tuple, or a plain string.
+        if hasattr(result, "text"):
+            text = result.text
+        elif isinstance(result, tuple):
+            text = result[0]
+        else:
+            text = result
+        return str(text).strip()
 
     def _generate_transformers(
         self, prompt: str, image: Image.Image | None, system_prompt: str, max_new_tokens: int

@@ -5,9 +5,12 @@ kaggle.json
 # ── Data & artifacts (large / regenerable) ────────────────────────────
 data/raw/
 data/index/
+# downloaded model weights (e.g. MedGemma MLX, ~2.8GB)
+models/
 *.faiss
 *.npy
 *.pt
+*.safetensors
 
 # ── Python ────────────────────────────────────────────────────────────
 __pycache__/

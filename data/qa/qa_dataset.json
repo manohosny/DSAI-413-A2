@@ -1,0 +1,842 @@
+[
+  {
+    "question": "Are there pleural effusions?",
+    "answer": "Yes, there are large right and moderate left pleural effusions.",
+    "qtype": "factual_yesno",
+    "source_study_id": "0",
+    "source_report": "Findings:  Impression: Compared to chest radiographs since ___, most recently ___.  Large right and moderate left pleural effusions and severe bibasilar atelectasis are unchanged.  Cardiac silhouette is obscured.  No pneumothorax.  Pulmonary edema is mild, obscured radiographically by overlying abnormalities."
+  },
+  {
+    "question": "What is the severity of the bibasilar atelectasis?",
+    "answer": "The bibasilar atelectasis is severe.",
+    "qtype": "location_severity",
+    "source_study_id": "0",
+    "source_report": "Findings:  Impression: Compared to chest radiographs since ___, most recently ___.  Large right and moderate left pleural effusions and severe bibasilar atelectasis are unchanged.  Cardiac silhouette is obscured.  No pneumothorax.  Pulmonary edema is mild, obscured radiographically by overlying abnormalities."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The large right and moderate left pleural effusions and severe bibasilar atelectasis are unchanged.",
+    "qtype": "impression",
+    "source_study_id": "0",
+    "source_report": "Findings:  Impression: Compared to chest radiographs since ___, most recently ___.  Large right and moderate left pleural effusions and severe bibasilar atelectasis are unchanged.  Cardiac silhouette is obscured.  No pneumothorax.  Pulmonary edema is mild, obscured radiographically by overlying abnormalities."
+  },
+  {
+    "question": "Is there evidence of pneumonia?",
+    "answer": "The report does not mention pneumonia.",
+    "qtype": "factual_yesno",
+    "source_study_id": "1",
+    "source_report": "Findings:  Impression:"
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is normal.",
+    "qtype": "impression",
+    "source_study_id": "1",
+    "source_report": "Findings:  Impression:"
+  },
+  {
+    "question": "Is there any mention of pleural effusion?",
+    "answer": "The report does not mention pleural effusion.",
+    "qtype": "factual_yesno",
+    "source_study_id": "1",
+    "source_report": "Findings:  Impression:"
+  },
+  {
+    "question": "Are there any previous images available?",
+    "answer": "No previous images are available.",
+    "qtype": "factual_yesno",
+    "source_study_id": "2",
+    "source_report": "Findings: No previous images.  There are relatively low lung volumes which may accentuate the prominent transverse diameter of the heart.  No evidence of vascular congestion or pleural effusion.  No convincing evidence of acute pneumonia, though there are some atelectatic changes at the left base. Impression:"
+  },
+  {
+    "question": "Is there evidence of vascular congestion?",
+    "answer": "No evidence of vascular congestion is present.",
+    "qtype": "factual_yesno",
+    "source_study_id": "2",
+    "source_report": "Findings: No previous images.  There are relatively low lung volumes which may accentuate the prominent transverse diameter of the heart.  No evidence of vascular congestion or pleural effusion.  No convincing evidence of acute pneumonia, though there are some atelectatic changes at the left base. Impression:"
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is that there are some atelectatic changes at the left base.",
+    "qtype": "impression",
+    "source_study_id": "2",
+    "source_report": "Findings: No previous images.  There are relatively low lung volumes which may accentuate the prominent transverse diameter of the heart.  No evidence of vascular congestion or pleural effusion.  No convincing evidence of acute pneumonia, though there are some atelectatic changes at the left base. Impression:"
+  },
+  {
+    "question": "Is there any relevant change compared to the previous radiograph?",
+    "answer": "No, there is no relevant change.",
+    "qtype": "factual_yesno",
+    "source_study_id": "3",
+    "source_report": "Findings: As compared to the previous radiograph, there is no relevant change.  Normal lung volumes.  Normal size of the cardiac silhouette.  Normal hilar and mediastinal structures.  Minimal scarring at the lateral aspects of the right lung.  No lung nodules or masses suggesting metastatic disease.  No pleural effusions.  No diffuse or focal lung parenchymal disease. Impression:"
+  },
+  {
+    "question": "What is the size of the cardiac silhouette?",
+    "answer": "Normal size.",
+    "qtype": "location_severity",
+    "source_study_id": "3",
+    "source_report": "Findings: As compared to the previous radiograph, there is no relevant change.  Normal lung volumes.  Normal size of the cardiac silhouette.  Normal hilar and mediastinal structures.  Minimal scarring at the lateral aspects of the right lung.  No lung nodules or masses suggesting metastatic disease.  No pleural effusions.  No diffuse or focal lung parenchymal disease. Impression:"
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is normal.",
+    "qtype": "impression",
+    "source_study_id": "3",
+    "source_report": "Findings: As compared to the previous radiograph, there is no relevant change.  Normal lung volumes.  Normal size of the cardiac silhouette.  Normal hilar and mediastinal structures.  Minimal scarring at the lateral aspects of the right lung.  No lung nodules or masses suggesting metastatic disease.  No pleural effusions.  No diffuse or focal lung parenchymal disease. Impression:"
+  },
+  {
+    "question": "Is there any pleural effusion?",
+    "answer": "No pleural effusion is present.",
+    "qtype": "factual_yesno",
+    "source_study_id": "4",
+    "source_report": "Findings: Mild pulmonary vascular congestion with mild to moderate interstitial pulmonary edema are new compared with the prior study.  Mild cardiomegaly has increased compared with the immediate prior study.  There is no pleural effusion, pneumothorax, or focal consolidation.  The cardiomediastinal contour is stable The osseous structures and upper abdomen are unremarkable. Impression: New mild pulmonary vascular congestion with mild to moderate interstitial pulmonary edema and increased mild cardiomegaly.  No focal consolidation."
+  },
+  {
+    "question": "What is the severity of the pulmonary edema?",
+    "answer": "The pulmonary edema is mild to moderate.",
+    "qtype": "location_severity",
+    "source_study_id": "4",
+    "source_report": "Findings: Mild pulmonary vascular congestion with mild to moderate interstitial pulmonary edema are new compared with the prior study.  Mild cardiomegaly has increased compared with the immediate prior study.  There is no pleural effusion, pneumothorax, or focal consolidation.  The cardiomediastinal contour is stable The osseous structures and upper abdomen are unremarkable. Impression: New mild pulmonary vascular congestion with mild to moderate interstitial pulmonary edema and increased mild cardiomegaly.  No focal consolidation."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is new mild pulmonary vascular congestion with mild to moderate interstitial pulmonary edema and increased mild cardiomegaly.",
+    "qtype": "impression",
+    "source_study_id": "4",
+    "source_report": "Findings: Mild pulmonary vascular congestion with mild to moderate interstitial pulmonary edema are new compared with the prior study.  Mild cardiomegaly has increased compared with the immediate prior study.  There is no pleural effusion, pneumothorax, or focal consolidation.  The cardiomediastinal contour is stable The osseous structures and upper abdomen are unremarkable. Impression: New mild pulmonary vascular congestion with mild to moderate interstitial pulmonary edema and increased mild cardiomegaly.  No focal consolidation."
+  },
+  {
+    "question": "Are there any signs of pneumonia?",
+    "answer": "No, the lungs are clear without consolidation.",
+    "qtype": "factual_yesno",
+    "source_study_id": "5",
+    "source_report": "Findings: Lungs are clear without consolidation, effusion, or pneumothorax.  The cardiomediastinal silhouette is within normal limits.  No displaced fractures. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "Is there a pleural effusion?",
+    "answer": "No, there is no pleural effusion.",
+    "qtype": "factual_yesno",
+    "source_study_id": "5",
+    "source_report": "Findings: Lungs are clear without consolidation, effusion, or pneumothorax.  The cardiomediastinal silhouette is within normal limits.  No displaced fractures. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "There is no acute cardiopulmonary process.",
+    "qtype": "impression",
+    "source_study_id": "5",
+    "source_report": "Findings: Lungs are clear without consolidation, effusion, or pneumothorax.  The cardiomediastinal silhouette is within normal limits.  No displaced fractures. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "Is there a new focal parenchymal opacity?",
+    "answer": "No, there is no evidence of pneumonia on the frontal and lateral radiograph.",
+    "qtype": "factual_yesno",
+    "source_study_id": "6",
+    "source_report": "Findings:  Impression: Comparison to ___.  No relevant change.  Minimally increased atelectasis at the left lung bases.  Unchanged known elevation of the left hemidiaphragm and moderate cardiomegaly as well as signs of generalized fluid overload.  No new focal parenchymal opacities.  No evidence of pneumonia on the frontal and lateral radiograph."
+  },
+  {
+    "question": "What is the severity of the left hemidiaphragm elevation?",
+    "answer": "The elevation of the left hemidiaphragm is unchanged.",
+    "qtype": "location_severity",
+    "source_study_id": "6",
+    "source_report": "Findings:  Impression: Comparison to ___.  No relevant change.  Minimally increased atelectasis at the left lung bases.  Unchanged known elevation of the left hemidiaphragm and moderate cardiomegaly as well as signs of generalized fluid overload.  No new focal parenchymal opacities.  No evidence of pneumonia on the frontal and lateral radiograph."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is comparison to previous study. No relevant change.",
+    "qtype": "impression",
+    "source_study_id": "6",
+    "source_report": "Findings:  Impression: Comparison to ___.  No relevant change.  Minimally increased atelectasis at the left lung bases.  Unchanged known elevation of the left hemidiaphragm and moderate cardiomegaly as well as signs of generalized fluid overload.  No new focal parenchymal opacities.  No evidence of pneumonia on the frontal and lateral radiograph."
+  },
+  {
+    "question": "Is the patient's cardiomegaly severe?",
+    "answer": "Yes, the report states that cardiomegaly is severe and unchanged.",
+    "qtype": "factual_yesno",
+    "source_study_id": "7",
+    "source_report": "Findings:  Impression: Cardiomegaly is severe, unchanged.  Pacemaker leads are unchanged.  There is interval progression of vascular congestion and interstitial pulmonary edema.  No pneumothorax.  No atelectasis.  Subcutaneous air within the left chest wall is minimal."
+  },
+  {
+    "question": "What is the severity of the vascular congestion?",
+    "answer": "The vascular congestion is described as interval progression of vascular congestion and interstitial pulmonary edema.",
+    "qtype": "location_severity",
+    "source_study_id": "7",
+    "source_report": "Findings:  Impression: Cardiomegaly is severe, unchanged.  Pacemaker leads are unchanged.  There is interval progression of vascular congestion and interstitial pulmonary edema.  No pneumothorax.  No atelectasis.  Subcutaneous air within the left chest wall is minimal."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is cardiomegaly is severe, unchanged.",
+    "qtype": "impression",
+    "source_study_id": "7",
+    "source_report": "Findings:  Impression: Cardiomegaly is severe, unchanged.  Pacemaker leads are unchanged.  There is interval progression of vascular congestion and interstitial pulmonary edema.  No pneumothorax.  No atelectasis.  Subcutaneous air within the left chest wall is minimal."
+  },
+  {
+    "question": "Is there any focal consolidation seen elsewhere on the chest X-ray?",
+    "answer": "No focal consolidation seen elsewhere.",
+    "qtype": "factual_yesno",
+    "source_study_id": "8",
+    "source_report": "Findings: Subtle patchy opacity along the left heart border on the frontal view, not substantiated on the lateral view, may be due to atelectasis/ scarring or epicardial fat pad, less likely consolidation. No focal consolidation seen elsewhere. There is no pleural effusion or pneumothorax. Cardiac and mediastinal silhouettes are stable. Hilar contours are stable. No overt pulmonary edema is seen. Chronic changes at the right acromioclavicular joint are not well assessed. Impression: Subtle patchy opacity along the left heart border on the frontal view, not substantiated on the lateral view, may be due to atelectasis/ scarring or epicardial fat pad, less likely consolidation."
+  },
+  {
+    "question": "What is the likely cause of the opacity along the left heart border?",
+    "answer": "The opacity along the left heart border may be due to atelectasis/ scarring or epicardial fat pad.",
+    "qtype": "impression",
+    "source_study_id": "8",
+    "source_report": "Findings: Subtle patchy opacity along the left heart border on the frontal view, not substantiated on the lateral view, may be due to atelectasis/ scarring or epicardial fat pad, less likely consolidation. No focal consolidation seen elsewhere. There is no pleural effusion or pneumothorax. Cardiac and mediastinal silhouettes are stable. Hilar contours are stable. No overt pulmonary edema is seen. Chronic changes at the right acromioclavicular joint are not well assessed. Impression: Subtle patchy opacity along the left heart border on the frontal view, not substantiated on the lateral view, may be due to atelectasis/ scarring or epicardial fat pad, less likely consolidation."
+  },
+  {
+    "question": "Is there any pleural effusion?",
+    "answer": "No pleural effusion or pneumothorax.",
+    "qtype": "factual_yesno",
+    "source_study_id": "8",
+    "source_report": "Findings: Subtle patchy opacity along the left heart border on the frontal view, not substantiated on the lateral view, may be due to atelectasis/ scarring or epicardial fat pad, less likely consolidation. No focal consolidation seen elsewhere. There is no pleural effusion or pneumothorax. Cardiac and mediastinal silhouettes are stable. Hilar contours are stable. No overt pulmonary edema is seen. Chronic changes at the right acromioclavicular joint are not well assessed. Impression: Subtle patchy opacity along the left heart border on the frontal view, not substantiated on the lateral view, may be due to atelectasis/ scarring or epicardial fat pad, less likely consolidation."
+  },
+  {
+    "question": "Is there any focal consolidation present on the chest X-ray?",
+    "answer": "No, there is no focal consolidation.",
+    "qtype": "factual_yesno",
+    "source_study_id": "9",
+    "source_report": "Findings: AP upright and lateral views of the chest provided.  There is no focal consolidation, effusion, or pneumothorax. The cardiomediastinal silhouette is normal. Imaged osseous structures are intact.  No free air below the right hemidiaphragm is seen. Impression: No acute intrathoracic process."
+  },
+  {
+    "question": "Is there any pleural effusion visible on the chest X-ray?",
+    "answer": "No pleural effusion is seen.",
+    "qtype": "factual_yesno",
+    "source_study_id": "9",
+    "source_report": "Findings: AP upright and lateral views of the chest provided.  There is no focal consolidation, effusion, or pneumothorax. The cardiomediastinal silhouette is normal. Imaged osseous structures are intact.  No free air below the right hemidiaphragm is seen. Impression: No acute intrathoracic process."
+  },
+  {
+    "question": "What is the impression based on the provided images?",
+    "answer": "There is no acute intrathoracic process.",
+    "qtype": "impression",
+    "source_study_id": "9",
+    "source_report": "Findings: AP upright and lateral views of the chest provided.  There is no focal consolidation, effusion, or pneumothorax. The cardiomediastinal silhouette is normal. Imaged osseous structures are intact.  No free air below the right hemidiaphragm is seen. Impression: No acute intrathoracic process."
+  },
+  {
+    "question": "Is there focal consolidation seen on the chest X-ray?",
+    "answer": "No focal consolidation is seen.",
+    "qtype": "factual_yesno",
+    "source_study_id": "10",
+    "source_report": "Findings: No focal consolidation is seen.  There is elevation of the mid to posterior left hemidiaphragm with minimal blunting of the left costophrenic angle without a definite pleural effusion seen on the lateral view.  No evidence of pneumothorax is seen.  The cardiac and mediastinal silhouettes are unremarkable.  Evidence of DISH is seen along the spine.  No displaced fracture is seen. Impression: Elevated left hemidiaphragm and blunting of the left costophrenic angle although no definite evidence of pleural effusion seen on the lateral view."
+  },
+  {
+    "question": "What is the location of the elevation of the left hemidiaphragm?",
+    "answer": "The elevation of the mid to posterior left hemidiaphragm.",
+    "qtype": "location_severity",
+    "source_study_id": "10",
+    "source_report": "Findings: No focal consolidation is seen.  There is elevation of the mid to posterior left hemidiaphragm with minimal blunting of the left costophrenic angle without a definite pleural effusion seen on the lateral view.  No evidence of pneumothorax is seen.  The cardiac and mediastinal silhouettes are unremarkable.  Evidence of DISH is seen along the spine.  No displaced fracture is seen. Impression: Elevated left hemidiaphragm and blunting of the left costophrenic angle although no definite evidence of pleural effusion seen on the lateral view."
+  },
+  {
+    "question": "What is the impression of the chest X-ray?",
+    "answer": "Elevated left hemidiaphragm and blunting of the left costophrenic angle although no definite evidence of pleural effusion seen on the lateral view.",
+    "qtype": "impression",
+    "source_study_id": "10",
+    "source_report": "Findings: No focal consolidation is seen.  There is elevation of the mid to posterior left hemidiaphragm with minimal blunting of the left costophrenic angle without a definite pleural effusion seen on the lateral view.  No evidence of pneumothorax is seen.  The cardiac and mediastinal silhouettes are unremarkable.  Evidence of DISH is seen along the spine.  No displaced fracture is seen. Impression: Elevated left hemidiaphragm and blunting of the left costophrenic angle although no definite evidence of pleural effusion seen on the lateral view."
+  },
+  {
+    "question": "Are there any acute cardiopulmonary processes identified on this chest X-ray?",
+    "answer": "No acute cardiopulmonary process is identified.",
+    "qtype": "factual_yesno",
+    "source_study_id": "11",
+    "source_report": "Findings: The lungs are clear.  The cardiomediastinal silhouette is within normal limits.  No acute osseous abnormalities. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "What is the size of the cardiomediastinal silhouette?",
+    "answer": "The cardiomediastinal silhouette is within normal limits.",
+    "qtype": "location_severity",
+    "source_study_id": "11",
+    "source_report": "Findings: The lungs are clear.  The cardiomediastinal silhouette is within normal limits.  No acute osseous abnormalities. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "What is the overall impression of the chest X-ray?",
+    "answer": "The overall impression is that there are no acute cardiopulmonary processes.",
+    "qtype": "impression",
+    "source_study_id": "11",
+    "source_report": "Findings: The lungs are clear.  The cardiomediastinal silhouette is within normal limits.  No acute osseous abnormalities. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "Is the heart size within normal limits?",
+    "answer": "Yes, the heart size is within normal limits.",
+    "qtype": "factual_yesno",
+    "source_study_id": "12",
+    "source_report": "Findings: No previous studies for comparison.  The heart size is within normal limits.  Lungs are grossly clear without definite consolidation, pleural effusions, or signs for acute pulmonary edema. There are no pneumothoraces. Impression:"
+  },
+  {
+    "question": "Are there any signs of acute pulmonary edema?",
+    "answer": "No, there are no signs of acute pulmonary edema.",
+    "qtype": "factual_yesno",
+    "source_study_id": "12",
+    "source_report": "Findings: No previous studies for comparison.  The heart size is within normal limits.  Lungs are grossly clear without definite consolidation, pleural effusions, or signs for acute pulmonary edema. There are no pneumothoraces. Impression:"
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is that there are no acute findings.",
+    "qtype": "impression",
+    "source_study_id": "12",
+    "source_report": "Findings: No previous studies for comparison.  The heart size is within normal limits.  Lungs are grossly clear without definite consolidation, pleural effusions, or signs for acute pulmonary edema. There are no pneumothoraces. Impression:"
+  },
+  {
+    "question": "Are there any signs of pulmonary consolidation?",
+    "answer": "No, the lungs are clear without consolidation.",
+    "qtype": "factual_yesno",
+    "source_study_id": "13",
+    "source_report": "Findings: The lungs are clear without consolidation or edema.  The mediastinum is unremarkable.  The cardiac silhouette is within normal limits for size.  No effusion or pneumothorax is noted.  The visualized osseous structures are unremarkable. Impression: No acute pulmonary process."
+  },
+  {
+    "question": "Is there any evidence of pleural effusion?",
+    "answer": "No effusion is noted.",
+    "qtype": "factual_yesno",
+    "source_study_id": "13",
+    "source_report": "Findings: The lungs are clear without consolidation or edema.  The mediastinum is unremarkable.  The cardiac silhouette is within normal limits for size.  No effusion or pneumothorax is noted.  The visualized osseous structures are unremarkable. Impression: No acute pulmonary process."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "There is no acute pulmonary process.",
+    "qtype": "impression",
+    "source_study_id": "13",
+    "source_report": "Findings: The lungs are clear without consolidation or edema.  The mediastinum is unremarkable.  The cardiac silhouette is within normal limits for size.  No effusion or pneumothorax is noted.  The visualized osseous structures are unremarkable. Impression: No acute pulmonary process."
+  },
+  {
+    "question": "Is there evidence of a right pneumothorax on the radiograph?",
+    "answer": "Yes, there is evidence of a right pneumothorax.",
+    "qtype": "factual_yesno",
+    "source_study_id": "14",
+    "source_report": "Findings:  Impression: As compared to ___, there is unchanged evidence of mildly displaced right rib fractures.  The right pneumothorax.  Visualized on the CT examination from ___, is not visualized on the radiograph.  No pleural effusions.  No pulmonary edema.  No pneumonia."
+  },
+  {
+    "question": "What is the severity of the displaced right rib fractures?",
+    "answer": "The displaced right rib fractures are mildly displaced.",
+    "qtype": "location_severity",
+    "source_study_id": "14",
+    "source_report": "Findings:  Impression: As compared to ___, there is unchanged evidence of mildly displaced right rib fractures.  The right pneumothorax.  Visualized on the CT examination from ___, is not visualized on the radiograph.  No pleural effusions.  No pulmonary edema.  No pneumonia."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The right pneumothorax visualized on the CT examination from ___, is not visualized on the radiograph.",
+    "qtype": "impression",
+    "source_study_id": "14",
+    "source_report": "Findings:  Impression: As compared to ___, there is unchanged evidence of mildly displaced right rib fractures.  The right pneumothorax.  Visualized on the CT examination from ___, is not visualized on the radiograph.  No pleural effusions.  No pulmonary edema.  No pneumonia."
+  },
+  {
+    "question": "Are there any acute cardiopulmonary processes identified on the chest X-ray?",
+    "answer": "No acute cardiopulmonary process is identified.",
+    "qtype": "factual_yesno",
+    "source_study_id": "15",
+    "source_report": "Findings: PA and lateral views of the chest.  No prior.  The lungs are clear. Cardiomediastinal silhouette is normal.  Osseous structures are unremarkable. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "What is the impression on the chest X-ray?",
+    "answer": "The impression is no acute cardiopulmonary process.",
+    "qtype": "impression",
+    "source_study_id": "15",
+    "source_report": "Findings: PA and lateral views of the chest.  No prior.  The lungs are clear. Cardiomediastinal silhouette is normal.  Osseous structures are unremarkable. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "Are the lungs clear on the chest X-ray?",
+    "answer": "The lungs are clear.",
+    "qtype": "factual_yesno",
+    "source_study_id": "15",
+    "source_report": "Findings: PA and lateral views of the chest.  No prior.  The lungs are clear. Cardiomediastinal silhouette is normal.  Osseous structures are unremarkable. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "Is there pulmonary edema present?",
+    "answer": "No pulmonary edema.",
+    "qtype": "factual_yesno",
+    "source_study_id": "16",
+    "source_report": "Findings: could reflect compressive atelectasis, although aspiration pneumonia should also be considered.  There is also an asymmetric airspace process involving the left apex, which likely is not significantly changed dating all the way back to ___ and therefore would favor a benign process.  No pulmonary edema.  No pneumothoraces.  Mediastinal contours are stable. Impression: The heart remains enlarged.  There is opacity along the medial left hemidiaphragm, which is known to correspond to a Bochdalek's hernia containing portion of the left kidney.  The right Bochdalek hernia is not as well visualized on today's examination.  There is patchy bibasilar opacity with likely associated layering effusions.  These findings could reflect compressive atelectasis, although aspiration pneumonia should also be considered.  There is also an asymmetric airspace process involving the left apex, which likely is not significantly changed dating all the way back to ___ and therefore would favor a benign process.  No pulmonary edema.  No pneumothoraces.  Mediastinal contours are stable."
+  },
+  {
+    "question": "What is the impression on the left apex?",
+    "answer": "The asymmetric airspace process involving the left apex likely favors a benign process.",
+    "qtype": "impression",
+    "source_study_id": "16",
+    "source_report": "Findings: could reflect compressive atelectasis, although aspiration pneumonia should also be considered.  There is also an asymmetric airspace process involving the left apex, which likely is not significantly changed dating all the way back to ___ and therefore would favor a benign process.  No pulmonary edema.  No pneumothoraces.  Mediastinal contours are stable. Impression: The heart remains enlarged.  There is opacity along the medial left hemidiaphragm, which is known to correspond to a Bochdalek's hernia containing portion of the left kidney.  The right Bochdalek hernia is not as well visualized on today's examination.  There is patchy bibasilar opacity with likely associated layering effusions.  These findings could reflect compressive atelectasis, although aspiration pneumonia should also be considered.  There is also an asymmetric airspace process involving the left apex, which likely is not significantly changed dating all the way back to ___ and therefore would favor a benign process.  No pulmonary edema.  No pneumothoraces.  Mediastinal contours are stable."
+  },
+  {
+    "question": "What is the location of the opacity along the medial left hemidiaphragm?",
+    "answer": "The opacity along the medial left hemidiaphragm is known to correspond to a Bochdalek's hernia containing portion of the left kidney.",
+    "qtype": "location_severity",
+    "source_study_id": "16",
+    "source_report": "Findings: could reflect compressive atelectasis, although aspiration pneumonia should also be considered.  There is also an asymmetric airspace process involving the left apex, which likely is not significantly changed dating all the way back to ___ and therefore would favor a benign process.  No pulmonary edema.  No pneumothoraces.  Mediastinal contours are stable. Impression: The heart remains enlarged.  There is opacity along the medial left hemidiaphragm, which is known to correspond to a Bochdalek's hernia containing portion of the left kidney.  The right Bochdalek hernia is not as well visualized on today's examination.  There is patchy bibasilar opacity with likely associated layering effusions.  These findings could reflect compressive atelectasis, although aspiration pneumonia should also be considered.  There is also an asymmetric airspace process involving the left apex, which likely is not significantly changed dating all the way back to ___ and therefore would favor a benign process.  No pulmonary edema.  No pneumothoraces.  Mediastinal contours are stable."
+  },
+  {
+    "question": "Are there pleural effusions present?",
+    "answer": "Yes, there is apparent slight increase in bilateral pleural effusions.",
+    "qtype": "factual_yesno",
+    "source_study_id": "17",
+    "source_report": "Findings: Allowing for differences in technique and projection, there has been minimal change in the appearance of the chest except for apparent slight increase in bilateral pleural effusions, now moderate on the right and small to moderate on the left. Impression:"
+  },
+  {
+    "question": "What is the severity of the right pleural effusion?",
+    "answer": "The right pleural effusion is moderate.",
+    "qtype": "location_severity",
+    "source_study_id": "17",
+    "source_report": "Findings: Allowing for differences in technique and projection, there has been minimal change in the appearance of the chest except for apparent slight increase in bilateral pleural effusions, now moderate on the right and small to moderate on the left. Impression:"
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is that there is a slight increase in bilateral pleural effusions.",
+    "qtype": "impression",
+    "source_study_id": "17",
+    "source_report": "Findings: Allowing for differences in technique and projection, there has been minimal change in the appearance of the chest except for apparent slight increase in bilateral pleural effusions, now moderate on the right and small to moderate on the left. Impression:"
+  },
+  {
+    "question": "Is there a new opacity at the right lung base?",
+    "answer": "Yes, there is a new subtle opacity at the right lung base.",
+    "qtype": "factual_yesno",
+    "source_study_id": "18",
+    "source_report": "Findings: Frontal and lateral views of the chest were obtained.  New subtle opacity at the right lung base in the setting of similar lung volumes with increased opacity on the lateral view may be atelectasis, but could represent early or developing pneumonia in the appropriate clinical setting.  Cardiac and mediastinal silhouettes are normal.  No acute osseous abnormality is identified. Impression: Right basilar opacity is probably atelectasis, but could represent early or developing pneumonia in the appropriate clinical setting."
+  },
+  {
+    "question": "What is the likely cause of the opacity at the right lung base?",
+    "answer": "The opacity at the right lung base is likely atelectasis, but could represent early or developing pneumonia.",
+    "qtype": "impression",
+    "source_study_id": "18",
+    "source_report": "Findings: Frontal and lateral views of the chest were obtained.  New subtle opacity at the right lung base in the setting of similar lung volumes with increased opacity on the lateral view may be atelectasis, but could represent early or developing pneumonia in the appropriate clinical setting.  Cardiac and mediastinal silhouettes are normal.  No acute osseous abnormality is identified. Impression: Right basilar opacity is probably atelectasis, but could represent early or developing pneumonia in the appropriate clinical setting."
+  },
+  {
+    "question": "Is there any acute osseous abnormality identified?",
+    "answer": "No acute osseous abnormality is identified.",
+    "qtype": "factual_yesno",
+    "source_study_id": "18",
+    "source_report": "Findings: Frontal and lateral views of the chest were obtained.  New subtle opacity at the right lung base in the setting of similar lung volumes with increased opacity on the lateral view may be atelectasis, but could represent early or developing pneumonia in the appropriate clinical setting.  Cardiac and mediastinal silhouettes are normal.  No acute osseous abnormality is identified. Impression: Right basilar opacity is probably atelectasis, but could represent early or developing pneumonia in the appropriate clinical setting."
+  },
+  {
+    "question": "Is there an acute cardiopulmonary abnormality?",
+    "answer": "No, there is no acute cardiopulmonary abnormality.",
+    "qtype": "factual_yesno",
+    "source_study_id": "19",
+    "source_report": "Findings:  Impression: No acute cardiopulmonary abnormality."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is no acute cardiopulmonary abnormality.",
+    "qtype": "impression",
+    "source_study_id": "19",
+    "source_report": "Findings:  Impression: No acute cardiopulmonary abnormality."
+  },
+  {
+    "question": "What is the severity of any findings?",
+    "answer": "The report states there are no acute cardiopulmonary abnormalities.",
+    "qtype": "location_severity",
+    "source_study_id": "19",
+    "source_report": "Findings:  Impression: No acute cardiopulmonary abnormality."
+  },
+  {
+    "question": "Are there any pleural effusions?",
+    "answer": "No pleural effusion is seen.",
+    "qtype": "factual_yesno",
+    "source_study_id": "20",
+    "source_report": "Findings: Frontal and lateral views of the chest demonstrate normal lung volumes without pleural effusion, focal consolidation or pneumothorax.  Hilar and mediastinal silhouettes are unremarkable.  Heart size is normal.  There is no pulmonary edema.  Partially imaged upper abdomen is unremarkable. Impression: No evidence of acute cardiopulmonary process."
+  },
+  {
+    "question": "Is there any evidence of pulmonary edema?",
+    "answer": "There is no pulmonary edema.",
+    "qtype": "factual_yesno",
+    "source_study_id": "20",
+    "source_report": "Findings: Frontal and lateral views of the chest demonstrate normal lung volumes without pleural effusion, focal consolidation or pneumothorax.  Hilar and mediastinal silhouettes are unremarkable.  Heart size is normal.  There is no pulmonary edema.  Partially imaged upper abdomen is unremarkable. Impression: No evidence of acute cardiopulmonary process."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "There is no evidence of acute cardiopulmonary process.",
+    "qtype": "impression",
+    "source_study_id": "20",
+    "source_report": "Findings: Frontal and lateral views of the chest demonstrate normal lung volumes without pleural effusion, focal consolidation or pneumothorax.  Hilar and mediastinal silhouettes are unremarkable.  Heart size is normal.  There is no pulmonary edema.  Partially imaged upper abdomen is unremarkable. Impression: No evidence of acute cardiopulmonary process."
+  },
+  {
+    "question": "Is there evidence of acute cardiopulmonary abnormality?",
+    "answer": "No acute cardiopulmonary abnormality is seen.",
+    "qtype": "factual_yesno",
+    "source_study_id": "21",
+    "source_report": "Findings: Heart size is normal. A small hiatal hernia is demonstrated. Mediastinal and hilar contours are otherwise unremarkable. No focal consolidation, pleural effusion or pneumothorax is seen.  Multiple clips are noted in the upper abdomen. Multilevel degenerative changes are present in the thoracic spine. Impression: No acute cardiopulmonary abnormality."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is that there is no acute cardiopulmonary abnormality.",
+    "qtype": "impression",
+    "source_study_id": "21",
+    "source_report": "Findings: Heart size is normal. A small hiatal hernia is demonstrated. Mediastinal and hilar contours are otherwise unremarkable. No focal consolidation, pleural effusion or pneumothorax is seen.  Multiple clips are noted in the upper abdomen. Multilevel degenerative changes are present in the thoracic spine. Impression: No acute cardiopulmonary abnormality."
+  },
+  {
+    "question": "Is there a hiatal hernia present?",
+    "answer": "A small hiatal hernia is demonstrated.",
+    "qtype": "factual_yesno",
+    "source_study_id": "21",
+    "source_report": "Findings: Heart size is normal. A small hiatal hernia is demonstrated. Mediastinal and hilar contours are otherwise unremarkable. No focal consolidation, pleural effusion or pneumothorax is seen.  Multiple clips are noted in the upper abdomen. Multilevel degenerative changes are present in the thoracic spine. Impression: No acute cardiopulmonary abnormality."
+  },
+  {
+    "question": "Is there evidence of acute cardiopulmonary disease?",
+    "answer": "No, there is no change or evidence of acute cardiopulmonary disease.",
+    "qtype": "factual_yesno",
+    "source_study_id": "22",
+    "source_report": "Findings: In comparison with the study of ___, there is no change or evidence of acute cardiopulmonary disease.  No pneumonia, vascular congestion, or pleural effusion.    There has been interval placement of multiple surgical clips in the lower neck, presumably from thyroid surgery. Impression:"
+  },
+  {
+    "question": "What is the location of the surgical clips?",
+    "answer": "The surgical clips are in the lower neck.",
+    "qtype": "location_severity",
+    "source_study_id": "22",
+    "source_report": "Findings: In comparison with the study of ___, there is no change or evidence of acute cardiopulmonary disease.  No pneumonia, vascular congestion, or pleural effusion.    There has been interval placement of multiple surgical clips in the lower neck, presumably from thyroid surgery. Impression:"
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is that there is no acute cardiopulmonary disease.",
+    "qtype": "impression",
+    "source_study_id": "22",
+    "source_report": "Findings: In comparison with the study of ___, there is no change or evidence of acute cardiopulmonary disease.  No pneumonia, vascular congestion, or pleural effusion.    There has been interval placement of multiple surgical clips in the lower neck, presumably from thyroid surgery. Impression:"
+  },
+  {
+    "question": "Is there any evidence of focal consolidation on the chest X-ray?",
+    "answer": "No, there is no evidence of focal consolidation.",
+    "qtype": "factual_yesno",
+    "source_study_id": "23",
+    "source_report": "Findings: Frontal and lateral views of the chest are obtained.  No focal consolidation, pleural effusion, or evidence of pneumothorax is seen.  The cardiac and mediastinal silhouettes are unremarkable. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "Is there any pleural effusion visible on the chest X-ray?",
+    "answer": "No, there is no pleural effusion seen.",
+    "qtype": "factual_yesno",
+    "source_study_id": "23",
+    "source_report": "Findings: Frontal and lateral views of the chest are obtained.  No focal consolidation, pleural effusion, or evidence of pneumothorax is seen.  The cardiac and mediastinal silhouettes are unremarkable. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "What is the impression based on the findings?",
+    "answer": "The impression is that there is no acute cardiopulmonary process.",
+    "qtype": "impression",
+    "source_study_id": "23",
+    "source_report": "Findings: Frontal and lateral views of the chest are obtained.  No focal consolidation, pleural effusion, or evidence of pneumothorax is seen.  The cardiac and mediastinal silhouettes are unremarkable. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "Are there any focal consolidations seen on the chest X-ray?",
+    "answer": "No focal consolidation is seen.",
+    "qtype": "factual_yesno",
+    "source_study_id": "24",
+    "source_report": "Findings: Frontal and lateral views of the chest were obtained.  The lungs are clear without focal consolidation.  No pleural effusion or pneumothorax is seen.  There appears to be a right-sided aortic arch.  The cardiac silhouette is not enlarged. Impression: Clear lungs without focal consolidation.  Probable right-sided aortic arch."
+  },
+  {
+    "question": "Is there a pleural effusion present?",
+    "answer": "No pleural effusion is seen.",
+    "qtype": "factual_yesno",
+    "source_study_id": "24",
+    "source_report": "Findings: Frontal and lateral views of the chest were obtained.  The lungs are clear without focal consolidation.  No pleural effusion or pneumothorax is seen.  There appears to be a right-sided aortic arch.  The cardiac silhouette is not enlarged. Impression: Clear lungs without focal consolidation.  Probable right-sided aortic arch."
+  },
+  {
+    "question": "What is the impression of the lungs?",
+    "answer": "Clear lungs without focal consolidation.",
+    "qtype": "impression",
+    "source_study_id": "24",
+    "source_report": "Findings: Frontal and lateral views of the chest were obtained.  The lungs are clear without focal consolidation.  No pleural effusion or pneumothorax is seen.  There appears to be a right-sided aortic arch.  The cardiac silhouette is not enlarged. Impression: Clear lungs without focal consolidation.  Probable right-sided aortic arch."
+  },
+  {
+    "question": "Was pulmonary edema present?",
+    "answer": "Yes, mild to moderate pulmonary edema was present.",
+    "qtype": "factual_yesno",
+    "source_study_id": "25",
+    "source_report": "Findings: to ___  by telephone on ___ at 11:15 AM, 5 minutes after discovery of the findings. Impression: Mild to moderate pulmonary edema, with a basal predominance, is new probably accompanied by small pleural effusions.  Heart size is top-normal not appreciably changed.  NOTIFICATION:  Dr. ___ reported the findings to ___  by telephone on ___ at 11:15 AM, 5 minutes after discovery of the findings."
+  },
+  {
+    "question": "What was the heart size?",
+    "answer": "The heart size was top-normal.",
+    "qtype": "location_severity",
+    "source_study_id": "25",
+    "source_report": "Findings: to ___  by telephone on ___ at 11:15 AM, 5 minutes after discovery of the findings. Impression: Mild to moderate pulmonary edema, with a basal predominance, is new probably accompanied by small pleural effusions.  Heart size is top-normal not appreciably changed.  NOTIFICATION:  Dr. ___ reported the findings to ___  by telephone on ___ at 11:15 AM, 5 minutes after discovery of the findings."
+  },
+  {
+    "question": "What was the impression?",
+    "answer": "The impression was mild to moderate pulmonary edema, with a basal predominance, is new probably accompanied by small pleural effusions.",
+    "qtype": "impression",
+    "source_study_id": "25",
+    "source_report": "Findings: to ___  by telephone on ___ at 11:15 AM, 5 minutes after discovery of the findings. Impression: Mild to moderate pulmonary edema, with a basal predominance, is new probably accompanied by small pleural effusions.  Heart size is top-normal not appreciably changed.  NOTIFICATION:  Dr. ___ reported the findings to ___  by telephone on ___ at 11:15 AM, 5 minutes after discovery of the findings."
+  },
+  {
+    "question": "Was there a substantial decrease in pulmonary opacifications?",
+    "answer": "Yes, there has been a substantial decrease in the bilateral pulmonary opacifications.",
+    "qtype": "factual_yesno",
+    "source_study_id": "26",
+    "source_report": "Findings:  Impression: In comparison with the study of ___ from an outside facility, there has been substantial decrease in the bilateral pulmonary opacifications.  Monitoring and support devices have been removed.  The cardiac silhouette is within normal limits.  Mild prominence of the ascending and descending aorta raise the possibility of underlying hypertension.  Some indistinctness of pulmonary vessels could reflect elevated pulmonary venous pressure. Are mild focal areas of opacification suggested at the bases.  In view of the relatively low lung volumes, these could merely reflect areas of atelectasis.  However, in the appropriate clinical setting, superimposed pneumonia could be considered."
+  },
+  {
+    "question": "What is the impression regarding the aorta?",
+    "answer": "The cardiac silhouette is within normal limits, and mild prominence of the ascending and descending aorta raise the possibility of underlying hypertension.",
+    "qtype": "impression",
+    "source_study_id": "26",
+    "source_report": "Findings:  Impression: In comparison with the study of ___ from an outside facility, there has been substantial decrease in the bilateral pulmonary opacifications.  Monitoring and support devices have been removed.  The cardiac silhouette is within normal limits.  Mild prominence of the ascending and descending aorta raise the possibility of underlying hypertension.  Some indistinctness of pulmonary vessels could reflect elevated pulmonary venous pressure. Are mild focal areas of opacification suggested at the bases.  In view of the relatively low lung volumes, these could merely reflect areas of atelectasis.  However, in the appropriate clinical setting, superimposed pneumonia could be considered."
+  },
+  {
+    "question": "What is the impression regarding the lung bases?",
+    "answer": "Are mild focal areas of opacification suggested at the bases.",
+    "qtype": "impression",
+    "source_study_id": "26",
+    "source_report": "Findings:  Impression: In comparison with the study of ___ from an outside facility, there has been substantial decrease in the bilateral pulmonary opacifications.  Monitoring and support devices have been removed.  The cardiac silhouette is within normal limits.  Mild prominence of the ascending and descending aorta raise the possibility of underlying hypertension.  Some indistinctness of pulmonary vessels could reflect elevated pulmonary venous pressure. Are mild focal areas of opacification suggested at the bases.  In view of the relatively low lung volumes, these could merely reflect areas of atelectasis.  However, in the appropriate clinical setting, superimposed pneumonia could be considered."
+  },
+  {
+    "question": "Are there any focal consolidations concerning for aspiration?",
+    "answer": "No, there is no focal consolidation that would be concerning for aspiration.",
+    "qtype": "factual_yesno",
+    "source_study_id": "27",
+    "source_report": "Findings: are similar to previous examination Impression: Since the prior study there is no substantial change in widespread parenchymal opacities and no focal consolidation that would be neo wall concerning for aspiration.  The rest of the findings are similar to previous examination"
+  },
+  {
+    "question": "What is the impression regarding the widespread parenchymal opacities?",
+    "answer": "The widespread parenchymal opacities are similar to the previous examination.",
+    "qtype": "impression",
+    "source_study_id": "27",
+    "source_report": "Findings: are similar to previous examination Impression: Since the prior study there is no substantial change in widespread parenchymal opacities and no focal consolidation that would be neo wall concerning for aspiration.  The rest of the findings are similar to previous examination"
+  },
+  {
+    "question": "Are there any new findings?",
+    "answer": "No, there is no substantial change in widespread parenchymal opacities and no focal consolidation that would be neo wall concerning for aspiration.",
+    "qtype": "factual_yesno",
+    "source_study_id": "27",
+    "source_report": "Findings: are similar to previous examination Impression: Since the prior study there is no substantial change in widespread parenchymal opacities and no focal consolidation that would be neo wall concerning for aspiration.  The rest of the findings are similar to previous examination"
+  },
+  {
+    "question": "Are there any acute cardiopulmonary processes visible on the chest X-ray?",
+    "answer": "No, there are no acute cardiopulmonary processes visible on the chest X-ray.",
+    "qtype": "factual_yesno",
+    "source_study_id": "28",
+    "source_report": "Findings: Frontal and lateral views of the chest.  The lungs are clear.  There is no pneumothorax nor effusion.  Cardiomediastinal silhouette is within normal limits.  Radiopaque densities seen in the mid to distal esophagus with additional focus just past the GE junction.  This may represent patient's esophageal pH probe. Impression: No acute cardiopulmonary process.  Radiopaque densities in the region of the mid to distal esophagus and stomach which may correlate with patient's pH probe placement."
+  },
+  {
+    "question": "What is the location of the radiopaque densities?",
+    "answer": "The radiopaque densities are seen in the mid to distal esophagus and stomach.",
+    "qtype": "location_severity",
+    "source_study_id": "28",
+    "source_report": "Findings: Frontal and lateral views of the chest.  The lungs are clear.  There is no pneumothorax nor effusion.  Cardiomediastinal silhouette is within normal limits.  Radiopaque densities seen in the mid to distal esophagus with additional focus just past the GE junction.  This may represent patient's esophageal pH probe. Impression: No acute cardiopulmonary process.  Radiopaque densities in the region of the mid to distal esophagus and stomach which may correlate with patient's pH probe placement."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is that there are no acute cardiopulmonary processes.",
+    "qtype": "impression",
+    "source_study_id": "28",
+    "source_report": "Findings: Frontal and lateral views of the chest.  The lungs are clear.  There is no pneumothorax nor effusion.  Cardiomediastinal silhouette is within normal limits.  Radiopaque densities seen in the mid to distal esophagus with additional focus just past the GE junction.  This may represent patient's esophageal pH probe. Impression: No acute cardiopulmonary process.  Radiopaque densities in the region of the mid to distal esophagus and stomach which may correlate with patient's pH probe placement."
+  },
+  {
+    "question": "Is there evidence of acute cardiopulmonary abnormality?",
+    "answer": "No, there is no acute cardiopulmonary abnormality.",
+    "qtype": "factual_yesno",
+    "source_study_id": "29",
+    "source_report": "Findings: Moderate enlargement of the cardiac silhouette persists.  The mediastinal and hilar contours are normal.  Pulmonary vasculature is normal.  No focal consolidation, pleural effusion or pneumothorax is identified.  No acute osseous abnormality is detected. Impression: No acute cardiopulmonary abnormality."
+  },
+  {
+    "question": "What is the size of the cardiac silhouette?",
+    "answer": "The cardiac silhouette is moderately enlarged.",
+    "qtype": "location_severity",
+    "source_study_id": "29",
+    "source_report": "Findings: Moderate enlargement of the cardiac silhouette persists.  The mediastinal and hilar contours are normal.  Pulmonary vasculature is normal.  No focal consolidation, pleural effusion or pneumothorax is identified.  No acute osseous abnormality is detected. Impression: No acute cardiopulmonary abnormality."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is no acute cardiopulmonary abnormality.",
+    "qtype": "impression",
+    "source_study_id": "29",
+    "source_report": "Findings: Moderate enlargement of the cardiac silhouette persists.  The mediastinal and hilar contours are normal.  Pulmonary vasculature is normal.  No focal consolidation, pleural effusion or pneumothorax is identified.  No acute osseous abnormality is detected. Impression: No acute cardiopulmonary abnormality."
+  },
+  {
+    "question": "Is the heart size normal?",
+    "answer": "No, the heart size is mildly enlarged, slightly increased compared to the prior exam.",
+    "qtype": "factual_yesno",
+    "source_study_id": "30",
+    "source_report": "Findings: The heart size is mildly enlarged, slightly increased compared to the prior exam.  The mediastinal and hilar contours are unremarkable.  There is mild pulmonary vascular congestion with trace amount of fluid tracking within the fissures.  No large pleural effusion or focal consolidation is seen.  There is no pneumothorax.  No acute osseous abnormalities identified. Impression: Findings likely reflective of mild pulmonary vascular congestion."
+  },
+  {
+    "question": "Is there a large pleural effusion?",
+    "answer": "No, there is no large pleural effusion.",
+    "qtype": "factual_yesno",
+    "source_study_id": "30",
+    "source_report": "Findings: The heart size is mildly enlarged, slightly increased compared to the prior exam.  The mediastinal and hilar contours are unremarkable.  There is mild pulmonary vascular congestion with trace amount of fluid tracking within the fissures.  No large pleural effusion or focal consolidation is seen.  There is no pneumothorax.  No acute osseous abnormalities identified. Impression: Findings likely reflective of mild pulmonary vascular congestion."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "Findings likely reflective of mild pulmonary vascular congestion.",
+    "qtype": "impression",
+    "source_study_id": "30",
+    "source_report": "Findings: The heart size is mildly enlarged, slightly increased compared to the prior exam.  The mediastinal and hilar contours are unremarkable.  There is mild pulmonary vascular congestion with trace amount of fluid tracking within the fissures.  No large pleural effusion or focal consolidation is seen.  There is no pneumothorax.  No acute osseous abnormalities identified. Impression: Findings likely reflective of mild pulmonary vascular congestion."
+  },
+  {
+    "question": "Are there any signs of acute intrathoracic process?",
+    "answer": "No acute intrathoracic process is identified.",
+    "qtype": "factual_yesno",
+    "source_study_id": "31",
+    "source_report": "Findings: AP upright and lateral views of the chest provided.  Lung volumes are low.  Allowing for this, the lungs are clear.  There is no focal consolidation, effusion, or pneumothorax. The cardiomediastinal silhouette is normal. Imaged osseous structures are intact.  No free air below the right hemidiaphragm is seen. Impression: No acute intrathoracic process."
+  },
+  {
+    "question": "Is there any pleural effusion?",
+    "answer": "There is no pleural effusion.",
+    "qtype": "factual_yesno",
+    "source_study_id": "31",
+    "source_report": "Findings: AP upright and lateral views of the chest provided.  Lung volumes are low.  Allowing for this, the lungs are clear.  There is no focal consolidation, effusion, or pneumothorax. The cardiomediastinal silhouette is normal. Imaged osseous structures are intact.  No free air below the right hemidiaphragm is seen. Impression: No acute intrathoracic process."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is no acute intrathoracic process.",
+    "qtype": "impression",
+    "source_study_id": "31",
+    "source_report": "Findings: AP upright and lateral views of the chest provided.  Lung volumes are low.  Allowing for this, the lungs are clear.  There is no focal consolidation, effusion, or pneumothorax. The cardiomediastinal silhouette is normal. Imaged osseous structures are intact.  No free air below the right hemidiaphragm is seen. Impression: No acute intrathoracic process."
+  },
+  {
+    "question": "Is there pulmonary edema?",
+    "answer": "Yes, moderately severe pulmonary edema has improved minimally in the mid and upper lung zones, not so in the lung bases where it is more severe, accompanied by moderate bilateral pleural effusion.",
+    "qtype": "factual_yesno",
+    "source_study_id": "32",
+    "source_report": "Findings:  Impression: AP chest compared to ___, 1:15 a.m.:  Moderately severe pulmonary edema has improved minimally in the mid and upper lung zones, not so in the lung bases where it is more severe, accompanied by moderate bilateral pleural effusion.  Severe cardiomegaly has improved slightly.  There is no pneumothorax.  Transvenous right atrioventricular pacer defibrillator system in standard placement.  Thoracic aorta is heavily calcified and mildly irregular in shape, due to heavy atherosclerotic plaque."
+  },
+  {
+    "question": "What is the severity of pulmonary edema in the lung bases?",
+    "answer": "It is more severe in the lung bases.",
+    "qtype": "location_severity",
+    "source_study_id": "32",
+    "source_report": "Findings:  Impression: AP chest compared to ___, 1:15 a.m.:  Moderately severe pulmonary edema has improved minimally in the mid and upper lung zones, not so in the lung bases where it is more severe, accompanied by moderate bilateral pleural effusion.  Severe cardiomegaly has improved slightly.  There is no pneumothorax.  Transvenous right atrioventricular pacer defibrillator system in standard placement.  Thoracic aorta is heavily calcified and mildly irregular in shape, due to heavy atherosclerotic plaque."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "Moderately severe pulmonary edema has improved minimally in the mid and upper lung zones, not so in the lung bases where it is more severe, accompanied by moderate bilateral pleural effusion.",
+    "qtype": "impression",
+    "source_study_id": "32",
+    "source_report": "Findings:  Impression: AP chest compared to ___, 1:15 a.m.:  Moderately severe pulmonary edema has improved minimally in the mid and upper lung zones, not so in the lung bases where it is more severe, accompanied by moderate bilateral pleural effusion.  Severe cardiomegaly has improved slightly.  There is no pneumothorax.  Transvenous right atrioventricular pacer defibrillator system in standard placement.  Thoracic aorta is heavily calcified and mildly irregular in shape, due to heavy atherosclerotic plaque."
+  },
+  {
+    "question": "Is the heart size normal?",
+    "answer": "Yes, the heart size is normal.",
+    "qtype": "factual_yesno",
+    "source_study_id": "33",
+    "source_report": "Findings: Heart size is normal.  The mediastinal and hilar contours are normal.  Mild atherosclerotic calcifications are noted at the aortic knob. The pulmonary vasculature is normal. Lungs are clear.  No pleural effusion or pneumothorax is seen. There are no acute osseous abnormalities.  No subdiaphragmatic free air is present. Impression: No acute cardiopulmonary abnormality.  No subdiaphragmatic free air identified."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is no acute cardiopulmonary abnormality.",
+    "qtype": "impression",
+    "source_study_id": "33",
+    "source_report": "Findings: Heart size is normal.  The mediastinal and hilar contours are normal.  Mild atherosclerotic calcifications are noted at the aortic knob. The pulmonary vasculature is normal. Lungs are clear.  No pleural effusion or pneumothorax is seen. There are no acute osseous abnormalities.  No subdiaphragmatic free air is present. Impression: No acute cardiopulmonary abnormality.  No subdiaphragmatic free air identified."
+  },
+  {
+    "question": "Are there any acute osseous abnormalities?",
+    "answer": "No acute osseous abnormalities are present.",
+    "qtype": "factual_yesno",
+    "source_study_id": "33",
+    "source_report": "Findings: Heart size is normal.  The mediastinal and hilar contours are normal.  Mild atherosclerotic calcifications are noted at the aortic knob. The pulmonary vasculature is normal. Lungs are clear.  No pleural effusion or pneumothorax is seen. There are no acute osseous abnormalities.  No subdiaphragmatic free air is present. Impression: No acute cardiopulmonary abnormality.  No subdiaphragmatic free air identified."
+  },
+  {
+    "question": "Is there an acute intrathoracic process?",
+    "answer": "No, there is no acute intrathoracic process.",
+    "qtype": "factual_yesno",
+    "source_study_id": "34",
+    "source_report": "Findings:  Impression: No acute intrathoracic process."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is no acute intrathoracic process.",
+    "qtype": "impression",
+    "source_study_id": "34",
+    "source_report": "Findings:  Impression: No acute intrathoracic process."
+  },
+  {
+    "question": "What is the severity of any identified findings?",
+    "answer": "The report states there is no acute intrathoracic process, so there are no findings to assess severity.",
+    "qtype": "location_severity",
+    "source_study_id": "34",
+    "source_report": "Findings:  Impression: No acute intrathoracic process."
+  },
+  {
+    "question": "Is there evidence of acute cardiopulmonary process?",
+    "answer": "No, there is no evidence of acute cardiopulmonary process.",
+    "qtype": "factual_yesno",
+    "source_study_id": "35",
+    "source_report": "Findings: Frontal and lateral chest radiographs demonstrate a normal cardiac silhouette. Slightly unfolded aorta with otherwise unremarkable mediastinal and hilar contour.  The lungs are well-aerated without focal consolidation, pleural effusion, or pneumothorax.  The visualized upper abdomen is unremarkable without evidence for sub- diaphragmatic free air. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is no acute cardiopulmonary process.",
+    "qtype": "impression",
+    "source_study_id": "35",
+    "source_report": "Findings: Frontal and lateral chest radiographs demonstrate a normal cardiac silhouette. Slightly unfolded aorta with otherwise unremarkable mediastinal and hilar contour.  The lungs are well-aerated without focal consolidation, pleural effusion, or pneumothorax.  The visualized upper abdomen is unremarkable without evidence for sub- diaphragmatic free air. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "What is the aorta described as?",
+    "answer": "The aorta is described as slightly unfolded.",
+    "qtype": "location_severity",
+    "source_study_id": "35",
+    "source_report": "Findings: Frontal and lateral chest radiographs demonstrate a normal cardiac silhouette. Slightly unfolded aorta with otherwise unremarkable mediastinal and hilar contour.  The lungs are well-aerated without focal consolidation, pleural effusion, or pneumothorax.  The visualized upper abdomen is unremarkable without evidence for sub- diaphragmatic free air. Impression: No acute cardiopulmonary process."
+  },
+  {
+    "question": "Is there evidence of focal consolidations concerning for pneumonia?",
+    "answer": "No, there is no evidence of focal consolidations concerning for pneumonia.",
+    "qtype": "factual_yesno",
+    "source_study_id": "36",
+    "source_report": "Findings: The heart size is normal.  The hilar and mediastinal contours are normal.  The lungs are clear without evidence of focal consolidations concerning for pneumonia.  There is no pleural effusion or pneumothorax. Impression: No focal consolidations concerning for pneumonia."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "The impression is no focal consolidations concerning for pneumonia.",
+    "qtype": "impression",
+    "source_study_id": "36",
+    "source_report": "Findings: The heart size is normal.  The hilar and mediastinal contours are normal.  The lungs are clear without evidence of focal consolidations concerning for pneumonia.  There is no pleural effusion or pneumothorax. Impression: No focal consolidations concerning for pneumonia."
+  },
+  {
+    "question": "Are there any pleural effusions?",
+    "answer": "There is no pleural effusion.",
+    "qtype": "factual_yesno",
+    "source_study_id": "36",
+    "source_report": "Findings: The heart size is normal.  The hilar and mediastinal contours are normal.  The lungs are clear without evidence of focal consolidations concerning for pneumonia.  There is no pleural effusion or pneumothorax. Impression: No focal consolidations concerning for pneumonia."
+  },
+  {
+    "question": "Is there evidence of pneumonia?",
+    "answer": "No, there is no evidence of pneumonia.",
+    "qtype": "factual_yesno",
+    "source_study_id": "37",
+    "source_report": "Findings: AP view of the chest.  There are low lung volumes.  Calcified nodules in the right lung base are unchanged from prior, likely sequelae of prior healed infection.  There is bibasilar atelectasis.  No focal consolidation, pleural effusion or pneumothorax.  The cardiomediastinal silhouette is unremarkable. Impression: 1. No evidence of pneumonia.  2. Stable calcified nodules in the right lung base, likely sequela of prior healed infection."
+  },
+  {
+    "question": "What is the severity of the bibasilar atelectasis?",
+    "answer": "The bibasilar atelectasis is mild.",
+    "qtype": "location_severity",
+    "source_study_id": "37",
+    "source_report": "Findings: AP view of the chest.  There are low lung volumes.  Calcified nodules in the right lung base are unchanged from prior, likely sequelae of prior healed infection.  There is bibasilar atelectasis.  No focal consolidation, pleural effusion or pneumothorax.  The cardiomediastinal silhouette is unremarkable. Impression: 1. No evidence of pneumonia.  2. Stable calcified nodules in the right lung base, likely sequela of prior healed infection."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "There is no evidence of pneumonia and stable calcified nodules in the right lung base, likely sequela of prior healed infection.",
+    "qtype": "impression",
+    "source_study_id": "37",
+    "source_report": "Findings: AP view of the chest.  There are low lung volumes.  Calcified nodules in the right lung base are unchanged from prior, likely sequelae of prior healed infection.  There is bibasilar atelectasis.  No focal consolidation, pleural effusion or pneumothorax.  The cardiomediastinal silhouette is unremarkable. Impression: 1. No evidence of pneumonia.  2. Stable calcified nodules in the right lung base, likely sequela of prior healed infection."
+  },
+  {
+    "question": "Is there any focal consolidation on the chest X-ray?",
+    "answer": "No, there is no focal consolidation.",
+    "qtype": "factual_yesno",
+    "source_study_id": "38",
+    "source_report": "Findings: The AP portable chest radiograph demonstrates right PICC which terminates in the axilla.  There is no focal consolidation.  There is bibasilar atelectasis. Heart size is top-normal.  Mediastinal and hilar contours are within normal limits.  There is no pneumothorax or appreciable pleural effusion. Impression: Right PICC with tip terminating in right axilla.  These findings were communicated to surgical house staff officer ___ by Dr. ___ ___ telephone at 10:00 on ___."
+  },
+  {
+    "question": "What is the location of the right PICC line?",
+    "answer": "The right PICC line terminates in the axilla.",
+    "qtype": "location_severity",
+    "source_study_id": "38",
+    "source_report": "Findings: The AP portable chest radiograph demonstrates right PICC which terminates in the axilla.  There is no focal consolidation.  There is bibasilar atelectasis. Heart size is top-normal.  Mediastinal and hilar contours are within normal limits.  There is no pneumothorax or appreciable pleural effusion. Impression: Right PICC with tip terminating in right axilla.  These findings were communicated to surgical house staff officer ___ by Dr. ___ ___ telephone at 10:00 on ___."
+  },
+  {
+    "question": "What is the impression of the chest X-ray?",
+    "answer": "Right PICC with tip terminating in right axilla.",
+    "qtype": "impression",
+    "source_study_id": "38",
+    "source_report": "Findings: The AP portable chest radiograph demonstrates right PICC which terminates in the axilla.  There is no focal consolidation.  There is bibasilar atelectasis. Heart size is top-normal.  Mediastinal and hilar contours are within normal limits.  There is no pneumothorax or appreciable pleural effusion. Impression: Right PICC with tip terminating in right axilla.  These findings were communicated to surgical house staff officer ___ by Dr. ___ ___ telephone at 10:00 on ___."
+  },
+  {
+    "question": "Is there a tracheostomy tube present?",
+    "answer": "Yes, there is a new tracheostomy tube, turned to the left, tip facing the left tracheal wall.",
+    "qtype": "factual_yesno",
+    "source_study_id": "39",
+    "source_report": "Findings:  Impression: AP chest compared to ___, 5:37 a.m.  There is a new tracheostomy tube, turned to the left, tip facing the left tracheal wall.  There is no pneumothorax or mediastinal widening.  Small right pleural effusion is new.  Heart size is normal.  Thoracic aorta is tortuous, but not focally dilated.  Right subclavian line ends low in the SVC."
+  },
+  {
+    "question": "Is there a pneumothorax?",
+    "answer": "No, there is no pneumothorax or mediastinal widening.",
+    "qtype": "factual_yesno",
+    "source_study_id": "39",
+    "source_report": "Findings:  Impression: AP chest compared to ___, 5:37 a.m.  There is a new tracheostomy tube, turned to the left, tip facing the left tracheal wall.  There is no pneumothorax or mediastinal widening.  Small right pleural effusion is new.  Heart size is normal.  Thoracic aorta is tortuous, but not focally dilated.  Right subclavian line ends low in the SVC."
+  },
+  {
+    "question": "What is the impression?",
+    "answer": "Small right pleural effusion is new.",
+    "qtype": "impression",
+    "source_study_id": "39",
+    "source_report": "Findings:  Impression: AP chest compared to ___, 5:37 a.m.  There is a new tracheostomy tube, turned to the left, tip facing the left tracheal wall.  There is no pneumothorax or mediastinal widening.  Small right pleural effusion is new.  Heart size is normal.  Thoracic aorta is tortuous, but not focally dilated.  Right subclavian line ends low in the SVC."
+  }
+]

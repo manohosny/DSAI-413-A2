@@ -62,7 +62,12 @@ def compare_report_strategies(n_reports: int) -> list[dict[str, Any]]:
     """Score MedGemma zero-shot vs RAG few-shot report generation."""
     from cxr.modes.report_generation import ReportGenerator
 
-    records = load_records(limit=None)
+    # Only records whose X-ray image is available locally can be scored.
+    records = [r for r in load_records(limit=None) if r.image_path.exists()]
+    if not records:
+        raise FileNotFoundError(
+            "No records have a local image file - download X-rays into data/raw/."
+        )
     random.Random(CONFIG.seed).shuffle(records)
     records = records[:n_reports]
     references = [r.report_text for r in records]

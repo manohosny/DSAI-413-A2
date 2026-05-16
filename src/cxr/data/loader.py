@@ -9,6 +9,8 @@ normalised :class:`CxrRecord` dataclass and never touches raw column names.
 from __future__ import annotations
 
 import functools
+# literal_eval parses only Python literals (no code execution); aliased here.
+from ast import literal_eval as _parse_literal
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterator
@@ -40,6 +42,26 @@ def _find_csv(data_dir: Path) -> Path:
             f"No CSV found under {data_dir}. Run `python scripts/download_data.py` first."
         )
     return csvs[0]
+
+
+def _first_list_item(value: object) -> str:
+    """Return the first element of a stringified list cell.
+
+    In this MIMIC-CXR export the ``image`` and ``text`` columns store
+    *stringified Python lists* (e.g. ``"['a.jpg', 'b.jpg']"``) because a
+    study has several views and the report is list-wrapped. We take the
+    first element; plain (non-list) values pass through unchanged.
+    """
+    text = str(value).strip()
+    if text.startswith("[") and text.endswith("]"):
+        try:
+            parsed = _parse_literal(text)
+        except (ValueError, SyntaxError):
+            return text
+        if isinstance(parsed, (list, tuple)) and parsed:
+            return str(parsed[0]).strip()
+        return ""
+    return text
 
 
 def _detect_column(df: pd.DataFrame, candidates: list[str], kind: str) -> str:
@@ -86,8 +108,9 @@ def load_dataframe() -> pd.DataFrame:
         df["study_id"].astype(str) if "study_id" in df.columns
         else df.index.astype(str)
     )
-    out["image"] = df[img_col].astype(str)
-    out["report"] = df[rep_col].fillna("").astype(str).str.strip()
+    # image / report cells are stringified lists in this export - unwrap them.
+    out["image"] = df[img_col].map(_first_list_item)
+    out["report"] = df[rep_col].fillna("").map(_first_list_item).str.strip()
     # Drop rows with an empty report — useless for both modes.
     out = out[out["report"].str.len() > 0].reset_index(drop=True)
     return out

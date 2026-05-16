@@ -43,13 +43,17 @@ class RetrievalResult:
     image_path: str | None = None
 
 
-def _torch_device() -> str:
-    """Pick the best available device (CUDA > Apple MPS > CPU)."""
+def _torch_device(allow_mps: bool = True) -> str:
+    """Pick the best available device (CUDA > Apple MPS > CPU).
+
+    ``allow_mps=False`` skips MPS - used by BiomedCLIP so it does not
+    contend with MLX MedGemma for Metal GPU memory on the 8GB M1.
+    """
     import torch
 
     if torch.cuda.is_available():
         return "cuda"
-    if torch.backends.mps.is_available():
+    if allow_mps and torch.backends.mps.is_available():
         return "mps"
     return "cpu"
 
@@ -113,20 +117,20 @@ class BiomedCLIPRetriever(BaseRetriever):
         self._preprocess = None
         self._tokenizer = None
         self._index = None
-        self._device = _torch_device()
+        # Stay off MPS: BiomedCLIP must coexist with MLX MedGemma, and both
+        # contending for Metal memory triggers GPU OOM on the 8GB M1.
+        self._device = _torch_device(allow_mps=False)
 
     def _ensure_model(self) -> None:
         """Lazily load the open_clip BiomedCLIP model + tokenizer."""
         if self._model is not None:
             return
         import open_clip
-        import torch
 
         self._model, self._preprocess = open_clip.create_model_from_pretrained(self.model_id)
         self._tokenizer = open_clip.get_tokenizer(self.model_id)
         self._model = self._model.to(self._device)
         self._model.train(False)  # inference mode (== .eval())
-        torch.set_grad_enabled(False)
 
     def _embed_texts(self, texts: list[str]) -> np.ndarray:
         """Encode report/question texts into L2-normalised embeddings."""
@@ -137,9 +141,12 @@ class BiomedCLIPRetriever(BaseRetriever):
         for start in range(0, len(texts), 32):  # batch to bound memory on 8GB
             batch = texts[start : start + 32]
             tokens = self._tokenizer(batch, context_length=256).to(self._device)
-            feats = self._model.encode_text(tokens)
-            feats = torch.nn.functional.normalize(feats, dim=-1)
-            vecs.append(feats.cpu().numpy())
+            # Explicit no_grad context: thread-safe across Streamlit reruns,
+            # unlike a process/thread-global grad-mode flag.
+            with torch.no_grad():
+                feats = self._model.encode_text(tokens)
+                feats = torch.nn.functional.normalize(feats, dim=-1)
+            vecs.append(feats.detach().cpu().numpy())
         return np.vstack(vecs).astype("float32")
 
     def _embed_image(self, image: Image.Image) -> np.ndarray:
@@ -148,9 +155,10 @@ class BiomedCLIPRetriever(BaseRetriever):
 
         self._ensure_model()
         tensor = self._preprocess(image.convert("RGB")).unsqueeze(0).to(self._device)
-        feats = self._model.encode_image(tensor)
-        feats = torch.nn.functional.normalize(feats, dim=-1)
-        return feats.cpu().numpy().astype("float32")
+        with torch.no_grad():
+            feats = self._model.encode_image(tensor)
+            feats = torch.nn.functional.normalize(feats, dim=-1)
+        return feats.detach().cpu().numpy().astype("float32")
 
     def build_index(self, records: list[CxrRecord]) -> None:
         import faiss

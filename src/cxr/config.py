@@ -21,6 +21,12 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 # Load .env from the repo root if present (no error if it is absent).
 load_dotenv(PROJECT_ROOT / ".env")
 
+# macOS: faiss and torch each vendor their own libomp, and the second to
+# initialise aborts with "OMP Error #15". Allow the duplicate runtime - safe
+# for our read-only similarity search. config.py is imported before torch or
+# faiss in every entry point, so this is set early enough to take effect.
+os.environ.setdefault("KMP_DUPLICATE_LIB_OK", "TRUE")
+
 
 class _Section:
     """Recursively wraps a dict so values are reachable as attributes."""

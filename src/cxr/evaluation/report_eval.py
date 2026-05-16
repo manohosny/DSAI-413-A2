@@ -63,5 +63,11 @@ def evaluate_reports(
     for name in metrics:
         if name not in _METRIC_FNS:
             raise ValueError(f"Unknown metric {name!r}. Options: {list(_METRIC_FNS)}")
-        results[name] = _METRIC_FNS[name](predictions, references)
+        # Isolate each metric: an expensive one failing (e.g. BERTScore
+        # running out of memory) must not discard the cheap, reliable ones.
+        try:
+            results[name] = _METRIC_FNS[name](predictions, references)
+        except Exception as exc:  # noqa: BLE001 - record the failure, keep going
+            print(f"  [eval] metric {name!r} failed ({exc}); skipping.")
+            results[name] = float("nan")
     return results

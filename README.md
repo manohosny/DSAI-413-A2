@@ -35,7 +35,8 @@ and Streamlit tab.
 | `google/medgemma-4b-it` | Vision-language generator (reports + answers) | M1 via **MLX 4-bit**; Colab via transformers |
 | `microsoft/BiomedCLIP-...` | Single-vector retriever (domain-tuned) | M1 (lightweight) |
 | `vidore/colpali-v1.3` | Multi-vector retriever (rendered report pages) | Colab GPU |
-| Gemini API | Offline QA-pair generation | API only |
+| MedGemma (text-only) | Offline QA-pair generation | M1 — **default** backend, no API key |
+| Gemini API | Offline QA-pair generation (optional alternative) | API only |
 
 ### Why a "split execution" design?
 
@@ -53,7 +54,7 @@ weight/latency on consumer hardware is itself part of the model comparison.
 src/cxr/
   config.py              # central config (config.yaml + .env)
   data/loader.py         # MIMIC-CXR loading, auto-detects CSV columns
-  data/qa_builder.py     # Gemini-based QA-pair generation
+  data/qa_builder.py     # QA-pair generation (MedGemma | Gemini backend)
   models/medgemma.py     # MedGemma wrapper (MLX | transformers backends)
   models/retrievers.py   # BiomedCLIP + ColPali behind one interface
   modes/report_generation.py   # Mode 1
@@ -83,7 +84,8 @@ cp .env.example .env                   # then fill in the values
 `.env` needs:
 - **`HF_TOKEN`** — MedGemma is gated: create a token *and* accept the license at
   <https://huggingface.co/google/medgemma-4b-it>.
-- **`GEMINI_API_KEY`** — free key from <https://aistudio.google.com/apikey> (QA dataset only).
+- **`GEMINI_API_KEY`** *(optional)* — only needed if `qa_generation.backend` is set
+  to `gemini` in `config.yaml`. The default `medgemma` backend needs no API key.
 - **`KAGGLE_USERNAME` / `KAGGLE_KEY`** — for the dataset download.
 
 All knobs (models, paths, sample sizes) live in [`config.yaml`](config.yaml).
@@ -96,7 +98,7 @@ All knobs (models, paths, sample sizes) live in [`config.yaml`](config.yaml).
 # 1. Download the MIMIC-CXR dataset (prints the detected schema)
 python scripts/download_data.py
 
-# 2. Build the QA dataset from the reports (Gemini) — or run notebook 01
+# 2. Build the QA dataset from the reports (MedGemma backend) — or run notebook 01
 python -c "from cxr.data.qa_builder import build_qa_dataset; build_qa_dataset()"
 
 # 3. Build the retrieval index (BiomedCLIP, local)
@@ -129,9 +131,10 @@ pytest -q          # lightweight smoke tests (no GPU / no weights needed)
 ## QA dataset creation
 
 The assignment provides no QA dataset, so one is synthesised from the report
-corpus: for each report, Gemini generates grounded question-answer pairs in
-three styles (factual yes/no, location/severity, impression). Each pair stores
-its `source_study_id`, which doubles as ground truth for retrieval evaluation.
+corpus: for each report, a language model (**MedGemma** by default; Gemini
+optional) generates grounded question-answer pairs in three styles (factual
+yes/no, location/severity, impression). Each pair stores its `source_study_id`,
+which doubles as ground truth for retrieval evaluation.
 Full method: [`reports/short_report.md`](reports/short_report.md).
 
 ---

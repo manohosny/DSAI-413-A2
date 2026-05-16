@@ -19,7 +19,8 @@ medgemma:
   # backend: "mlx" (Apple Silicon, 4-bit) or "transformers" (CUDA/CPU).
   backend: mlx
   hf_model_id: google/medgemma-4b-it
-  mlx_model_id: mlx-community/medgemma-4b-it-4bit
+  # local dir if present (downloaded weights), else an HF repo id (Colab).
+  mlx_model_id: models/medgemma-4b-it-4bit
   max_new_tokens: 400
   temperature: 0.0            # deterministic clinical output
 
@@ -33,15 +34,19 @@ retrieval:
   colpali:
     model_id: vidore/colpali-v1.3   # used in the Colab notebook only
 
-# ── QA dataset generation (Gemini) ────────────────────────────────────
+# ── QA dataset generation ─────────────────────────────────────────────
 qa_generation:
-  gemini_model: gemini-2.0-flash
+  # backend: "medgemma" (local, no API key) or "gemini" (needs free-tier quota).
+  backend: medgemma
+  gemini_model: gemini-2.5-flash
   pairs_per_report: 3
-  max_reports: 300            # cap for a manageable coursework-sized set
+  max_reports: 40             # local MedGemma generation is slow - keep modest
 
 # ── Evaluation ────────────────────────────────────────────────────────
 evaluation:
-  report_metrics: [bleu, rougeL, bertscore]
+  # bertscore omitted locally: roberta-large + MedGemma exceed 8GB RAM.
+  # Re-add "bertscore" when running the Colab notebook.
+  report_metrics: [bleu, rougeL]
   retrieval_k_values: [1, 3, 5]
   sample_size: 50             # held-out items used for scoring
 

@@ -3,9 +3,9 @@
 **Course:** DSAI 413 — Assignment 2
 **System:** Dual-mode (Report Generation + RAG-based QA) chest X-ray AI
 
-> Quantitative tables below are populated by running
-> `python -m cxr.evaluation.compare` (or notebook 03). Placeholders marked
-> `TBD` are filled from that run. The qualitative analysis is final.
+> Quantitative tables below were produced by `python -m cxr.evaluation.compare`
+> on the local 8GB M1 (BiomedCLIP retriever + MedGemma generator, MLX 4-bit).
+> ColPali rows and BERTScore are produced by the Colab notebooks (02/03).
 
 ---
 
@@ -49,7 +49,7 @@ local demo. This "split execution" keeps every assignment requirement runnable.
 | **MedGemma-4B-it** | VLM generator (reports + answers) | Mandatory; medical-domain VLM, strong single-image CXR understanding |
 | **ColPali v1.3** | Multi-vector retriever | Mandatory; ColBERT-style late interaction over rendered report pages |
 | **BiomedCLIP** | Single-vector retriever | Replaces vanilla CLIP — domain-tuned on 15M PubMed pairs, light enough for 8GB |
-| **Gemini 2.0 Flash** | Offline QA-pair generation | Free tier, high-quality grounded generation, no local compute |
+| **MedGemma (text-only)** | Offline QA-pair generation | Default QA backend — no API key, reproducible, medically grounded (see §3) |
 
 ColPali was trained on **document-page screenshots**, not X-ray pixels — hence
 the assignment's "might need fine-tune" note. Rather than fine-tune (GPU-heavy,
@@ -61,17 +61,29 @@ as a comparison finding.
 
 No QA dataset was provided, so one was synthesised from the radiology reports:
 
-1. Each report (the dataset's `text` column) is sent to **Gemini** with a strict
-   prompt: generate N question-answer pairs **grounded only in that report**,
-   no outside knowledge, no invented findings.
+1. Each report (the dataset's `text` column) is sent to a language model with a
+   strict prompt: generate N question-answer pairs **grounded only in that
+   report** — no outside knowledge, no invented findings.
 2. Three balanced question types are requested: `factual_yesno`,
    `location_severity`, `impression`.
 3. Each pair is stored with its `source_study_id` and `source_report`.
 
-This `source_study_id` is the key design choice: it serves as **ground truth for
+**Backend — MedGemma, not Gemini.** Gemini was the original choice, but the
+available API key's project returned `429 RESOURCE_EXHAUSTED` with `limit: 0`
+(no free-tier quota). QA generation was pivoted to **MedGemma run locally**,
+which has two advantages: zero API dependency (fully reproducible offline) and
+medical-domain grounding. `qa_builder.py` keeps both backends behind one shared
+prompt, switchable in `config.yaml`.
+
+**This run produced 120 QA pairs from 40 reports** (3 per report, 100% JSON-parse
+success): 59 `factual_yesno`, 41 `impression`, 20 `location_severity`. MedGemma
+grounded answers correctly — e.g. *"Is there evidence of pneumonia?"* →
+*"The report does not mention pneumonia"*, refusing to invent an absent finding.
+
+The `source_study_id` is the key design choice: it is **ground truth for
 retrieval evaluation** — a retrieval is correct when the source report appears in
-the top-k. The dataset is therefore both the QA knowledge-base eval set and the
-retrieval benchmark, with no manual labelling. Build: `notebooks/01_qa_dataset_creation.ipynb`.
+the top-k. The dataset is therefore both the QA eval set and the retrieval
+benchmark, with no manual labelling. Build: `notebooks/01_qa_dataset_creation.ipynb`.
 
 ## 4. Comparison results
 
@@ -79,32 +91,54 @@ retrieval benchmark, with no manual labelling. Build: `notebooks/01_qa_dataset_c
 
 | Retriever | Recall@1 | Recall@3 | Recall@5 | MRR | Avg latency (s) |
 |-----------|----------|----------|----------|-----|-----------------|
-| BiomedCLIP | TBD | TBD | TBD | TBD | TBD |
-| ColPali    | TBD | TBD | TBD | TBD | TBD |
+| BiomedCLIP | 0.00 | 0.06 | 0.14 | 0.046 | 0.319 |
+| ColPali    | *Colab* | *Colab* | *Colab* | *Colab* | *Colab* |
 
-*Expected pattern:* BiomedCLIP is far faster and lighter (single 512-d vector,
-FAISS) and benefits from medical-domain pretraining. ColPali's late interaction
-captures finer token-level matches and should compete or win on recall once
-reports are rendered as pages, at a substantial latency/memory cost.
+*Run: 50-question sample over a 300-report index. ColPali's index is built in
+notebook 02 (Colab) — its 3B base is too heavy for the 8GB M1.*
+
+**Reading the numbers — low recall is itself a finding, not a bug.** The
+synthetic questions are deliberately generic ("Are there pleural effusions?",
+"What is the impression?"); dozens of the 300 reports legitimately match each,
+so the *exact source* report rarely ranks #1. Crucially, Recall@5 = 0.14 still
+beats random chance (≈0.017 over 300 reports) by ~8×, confirming retrieval
+genuinely works — and the QA mode answers such questions correctly regardless,
+since *any* report containing the queried finding is valid grounding context.
+The lesson: exact-source Recall@k *under-measures* RAG quality for
+generic-question datasets; a finding-overlap metric would score it more fairly.
 
 ### 4.2 Report-generation strategy comparison
 
-| Strategy | BLEU | ROUGE-L | BERTScore |
-|----------|------|---------|-----------|
-| zero_shot   | TBD | TBD | TBD |
-| rag_fewshot | TBD | TBD | TBD |
+| Strategy | BLEU | ROUGE-L |
+|----------|------|---------|
+| zero_shot   | 2.95 | 0.251 |
+| rag_fewshot | **6.66** | **0.297** |
 
-*Expected pattern:* `rag_fewshot` should improve surface metrics (BLEU/ROUGE) by
-aligning phrasing to the corpus style; BERTScore gains are usually smaller since
-zero-shot MedGemma is already semantically competent. Retrieving an irrelevant
-report can also mislead generation — a documented limitation.
+*Run: 10 reports with locally-available X-rays. BERTScore omitted on the 8GB M1
+(`roberta-large` + MedGemma exceed memory); it is computed in the Colab notebook.*
+
+**RAG few-shot more than doubled BLEU** (2.95 → 6.66) and lifted ROUGE-L
+(0.251 → 0.297). Injecting retrieved similar reports as in-context examples
+measurably steers MedGemma toward the corpus's reporting style and vocabulary.
+Absolute BLEU is low — expected for chest-X-ray report generation, where reports
+are short and lexically varied (published CXR BLEU-4 is typically 5–15); the
+*relative* gain is the meaningful signal. Risk: retrieving an irrelevant report
+can also mislead generation — a documented limitation.
 
 ## 5. Limitations & insights
 
-- **Hardware** dominated design: 8GB RAM forced MLX quantization, lazy single-model
-  loading, and offloading ColPali to Colab.
+- **Hardware dominated the design.** 8GB RAM forced MLX 4-bit quantization, lazy
+  single-model loading, and offloading ColPali to Colab. Two M1-specific issues
+  surfaced and were fixed: the multimodal prefill tripped the Metal GPU watchdog
+  (`kIOGPUCommandBufferCallbackErrorTimeout`) until `mx.clear_cache()` was called
+  before each image pass, and `faiss` + `torch` each vendor `libomp` (resolved
+  with `KMP_DUPLICATE_LIB_OK`). MedGemma image inference runs ~28s/report locally.
+- **Retrieval metric.** Exact-source Recall@k under-measures RAG quality for the
+  generic synthetic questions (see §4.1); a finding-overlap metric would be fairer.
 - **CLIP text-text retrieval** (question → report) is weaker than its cross-modal
   (image → report) use; ColPali's late interaction partly addresses this.
-- **Evaluation is automatic** (BLEU/ROUGE/BERTScore, Recall@k/MRR) — these correlate
+- **MedGemma-generated QA** is simpler in phrasing than a frontier model would
+  produce, but is reproducible, offline, and medically grounded.
+- **Evaluation is automatic** (BLEU/ROUGE/BERTScore, Recall@k/MRR) — it correlates
   imperfectly with clinical correctness; a radiologist review would be the next step.
 - Generated reports/answers are **not clinically validated**.
