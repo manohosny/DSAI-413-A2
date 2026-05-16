@@ -1,22 +1,16 @@
-"""Retrievers for the RAG QA mode.
+"""Retriever for the RAG QA mode.
 
-Two retrievers implement one interface so the QA pipeline and the
-evaluation code stay retriever-agnostic - swapping them is the core
-model comparison the assignment asks for:
+The QA pipeline and the evaluation code depend only on the
+:class:`BaseRetriever` interface, so the retriever can be swapped without
+touching them.
 
-  * :class:`BiomedCLIPRetriever` - single-vector, domain-tuned, FAISS
-    cosine search. Light enough to run live on an 8GB M1.
-  * :class:`ColPaliRetriever` - multi-vector (ColBERT-style late
-    interaction) over *rendered report pages*. Heavier; intended for
-    the Colab notebook. Needs `pip install colpali-engine`.
+:class:`BiomedCLIPRetriever` is a single-vector, domain-tuned retriever with
+a FAISS cosine-similarity index. It is light enough to run live on an 8GB M1
+and indexes the **report texts** (the QA knowledge base). It can be queried
+with a text question (QA mode) or an X-ray image (report-generation RAG) -
+BiomedCLIP's shared image-text space supports both.
 
-A retriever indexes the **report texts** (the QA knowledge base). It can
-be queried with either a text question (QA mode) or an X-ray image
-(report-generation RAG) - BiomedCLIP's shared image-text space supports
-both; ColPali supports text queries only.
-
-Note: models are switched to inference mode with ``.train(False)``, which
-is exactly equivalent to PyTorch's ``.eval()``.
+The model is switched to inference mode with ``.train(False)`` (== ``.eval()``).
 """
 
 from __future__ import annotations
@@ -43,19 +37,16 @@ class RetrievalResult:
     image_path: str | None = None
 
 
-def _torch_device(allow_mps: bool = True) -> str:
-    """Pick the best available device (CUDA > Apple MPS > CPU).
+def _torch_device() -> str:
+    """Pick the torch device for the retriever.
 
-    ``allow_mps=False`` skips MPS - used by BiomedCLIP so it does not
-    contend with MLX MedGemma for Metal GPU memory on the 8GB M1.
+    MPS is deliberately skipped: BiomedCLIP must coexist with MLX MedGemma,
+    and both contending for Metal memory triggers GPU OOM on the 8GB M1.
+    CPU is plenty for a single-vector encoder.
     """
     import torch
 
-    if torch.cuda.is_available():
-        return "cuda"
-    if allow_mps and torch.backends.mps.is_available():
-        return "mps"
-    return "cpu"
+    return "cuda" if torch.cuda.is_available() else "cpu"
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -117,9 +108,7 @@ class BiomedCLIPRetriever(BaseRetriever):
         self._preprocess = None
         self._tokenizer = None
         self._index = None
-        # Stay off MPS: BiomedCLIP must coexist with MLX MedGemma, and both
-        # contending for Metal memory triggers GPU OOM on the 8GB M1.
-        self._device = _torch_device(allow_mps=False)
+        self._device = _torch_device()
 
     def _ensure_model(self) -> None:
         """Lazily load the open_clip BiomedCLIP model + tokenizer."""
@@ -201,96 +190,10 @@ class BiomedCLIPRetriever(BaseRetriever):
 
 
 # ══════════════════════════════════════════════════════════════════════
-# ColPali - multi-vector retriever (Colab / GPU)
-# ══════════════════════════════════════════════════════════════════════
-class ColPaliRetriever(BaseRetriever):
-    """Late-interaction retriever over rendered report-page images."""
-
-    name = "colpali"
-
-    def __init__(self) -> None:
-        super().__init__()
-        self.model_id = CONFIG.retrieval.colpali.model_id
-        self._model = None
-        self._processor = None
-        self._doc_embeddings: list = []  # one variable-length tensor per report
-        self._device = _torch_device()
-
-    def _ensure_model(self) -> None:
-        if self._model is not None:
-            return
-        import torch
-        from colpali_engine.models import ColPali, ColPaliProcessor
-
-        self._model = ColPali.from_pretrained(
-            self.model_id, torch_dtype=torch.float16, device_map=self._device
-        )
-        self._model.train(False)  # inference mode (== .eval())
-        self._processor = ColPaliProcessor.from_pretrained(self.model_id)
-
-    def build_index(self, records: list[CxrRecord]) -> None:
-        import torch
-
-        from cxr.utils.rendering import render_report_page
-
-        self._ensure_model()
-        self._doc_embeddings = []
-        self._meta = []
-        for start in range(0, len(records), 4):  # small batches - ColPali is heavy
-            batch = records[start : start + 4]
-            pages = [render_report_page(r.report_text) for r in batch]
-            inputs = self._processor.process_images(pages).to(self._model.device)
-            with torch.no_grad():
-                embs = self._model(**inputs)
-            for rec, emb in zip(batch, embs):
-                self._doc_embeddings.append(emb.cpu())
-                self._meta.append(
-                    {
-                        "study_id": rec.study_id,
-                        "report": rec.report_text,
-                        "image_path": str(rec.image_path),
-                    }
-                )
-
-        torch.save(self._doc_embeddings, self.index_dir / "doc_embeddings.pt")
-        (self.index_dir / "meta.json").write_text(json.dumps(self._meta), encoding="utf-8")
-        print(f"[ColPali] indexed {len(records)} report pages -> {self.index_dir}")
-
-    def load_index(self) -> None:
-        import torch
-
-        meta_path = self.index_dir / "meta.json"
-        if not meta_path.exists():
-            raise FileNotFoundError(
-                f"No ColPali index at {self.index_dir}. Build it in notebook 02 (Colab)."
-            )
-        self._doc_embeddings = torch.load(self.index_dir / "doc_embeddings.pt")
-        self._meta = json.loads(meta_path.read_text(encoding="utf-8"))
-
-    def retrieve(self, query: str | Image.Image, top_k: int = 4) -> list[RetrievalResult]:
-        import torch
-
-        if isinstance(query, Image.Image):
-            raise TypeError("ColPali supports text queries only; use BiomedCLIP for images.")
-        if not self._doc_embeddings:
-            self.load_index()
-        self._ensure_model()
-
-        batch = self._processor.process_queries([str(query)]).to(self._model.device)
-        with torch.no_grad():
-            qemb = self._model(**batch)
-        # ColBERT-style MaxSim scoring of the query against every doc.
-        scores = self._processor.score_multi_vector(qemb, self._doc_embeddings)[0]
-        top = torch.topk(scores, k=min(top_k, len(self._doc_embeddings)))
-        return self._results_from_meta(top.indices.tolist(), top.values.tolist())
-
-
-# ══════════════════════════════════════════════════════════════════════
 # Factory
 # ══════════════════════════════════════════════════════════════════════
 _REGISTRY: dict[str, type[BaseRetriever]] = {
     "biomedclip": BiomedCLIPRetriever,
-    "colpali": ColPaliRetriever,
 }
 
 

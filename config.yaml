@@ -24,15 +24,12 @@ medgemma:
   max_new_tokens: 400
   temperature: 0.0            # deterministic clinical output
 
-# ── Retrievers ────────────────────────────────────────────────────────
+# ── Retriever (BiomedCLIP) ────────────────────────────────────────────
 retrieval:
-  # active retriever for the local app: "biomedclip" or "colpali"
   active: biomedclip
   top_k: 4
   biomedclip:
     model_id: hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224
-  colpali:
-    model_id: vidore/colpali-v1.3   # used in the Colab notebook only
 
 # ── QA dataset generation ─────────────────────────────────────────────
 qa_generation:

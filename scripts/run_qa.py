@@ -2,7 +2,7 @@
 
 Usage:
     python scripts/run_qa.py --question "Is there evidence of pneumonia?"
-    python scripts/run_qa.py --question "..." --retriever colpali --image xray.jpg
+    python scripts/run_qa.py --question "..." --image xray.jpg
 """
 
 from __future__ import annotations
@@ -22,13 +22,12 @@ from cxr.modes.qa_rag import QAEngine  # noqa: E402
 def main() -> None:
     parser = argparse.ArgumentParser(description="Ask a question over the report corpus (RAG).")
     parser.add_argument("--question", required=True, help="Clinical question to answer.")
-    parser.add_argument("--retriever", default=None, choices=["biomedclip", "colpali"])
     parser.add_argument("--image", default=None, help="Optional chest X-ray to attach.")
     parser.add_argument("--top-k", type=int, default=None)
     args = parser.parse_args()
 
     image = Image.open(args.image).convert("RGB") if args.image else None
-    engine = QAEngine(retriever=build_retriever(args.retriever))
+    engine = QAEngine(retriever=build_retriever())
     result = engine.answer(args.question, image=image, top_k=args.top_k)
 
     print(f"\nQUESTION: {result.question}\n")

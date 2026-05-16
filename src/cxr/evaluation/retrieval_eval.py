@@ -7,8 +7,7 @@ in the retrieved top-k. From the rank of the source report we compute:
   * Recall@k - fraction of questions whose source report is in the top-k.
   * MRR      - mean reciprocal rank of the source report.
 
-Latency is timed too, since speed is a real differentiator between the
-lightweight BiomedCLIP and the heavier ColPali.
+Latency is timed too as a practical performance measure.
 """
 
 from __future__ import annotations

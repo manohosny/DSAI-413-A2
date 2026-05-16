@@ -1,7 +1,7 @@
 """Lightweight smoke tests - no model weights, no network, no dataset.
 
 These verify the pure-Python plumbing (config, parsing, column detection,
-rendering, table formatting) so wiring bugs surface without a GPU run.
+table formatting) so wiring bugs surface without a GPU run.
 
 Run:  pytest -q
 """
@@ -43,16 +43,6 @@ def test_qa_json_parsing_tolerates_code_fences():
     assert parsed[0]["question"] == "Q?"
 
 
-def test_render_report_page_returns_image():
-    from PIL import Image
-
-    from cxr.utils.rendering import render_report_page
-
-    page = render_report_page("FINDINGS: No acute disease.\nIMPRESSION: Normal.")
-    assert isinstance(page, Image.Image)
-    assert page.size[0] > 0 and page.size[1] > 0
-
-
 def test_markdown_table_formatting():
     from cxr.evaluation.compare import _markdown_table
 
@@ -62,10 +52,9 @@ def test_markdown_table_formatting():
 
 
 def test_retriever_factory():
-    from cxr.models.retrievers import BiomedCLIPRetriever, ColPaliRetriever, build_retriever
+    from cxr.models.retrievers import BiomedCLIPRetriever, build_retriever
 
     assert isinstance(build_retriever("biomedclip"), BiomedCLIPRetriever)
-    assert isinstance(build_retriever("colpali"), ColPaliRetriever)
     with pytest.raises(ValueError):
         build_retriever("does-not-exist")
 

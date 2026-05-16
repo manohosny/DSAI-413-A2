@@ -1,15 +1,15 @@
 """Model-comparison harness.
 
-Produces the two comparisons the assignment requires and writes them as
-markdown tables to ``reports/comparison_results.md``:
+Writes the assignment's comparison/evaluation tables as markdown to
+``reports/comparison_results.md``:
 
-  1. Retriever comparison - BiomedCLIP vs ColPali on the QA eval set
-     (Recall@k, MRR, latency).
+  1. Retriever evaluation - BiomedCLIP Recall@k / MRR / latency on the
+     QA eval set.
   2. Report-strategy comparison - MedGemma zero-shot vs MedGemma + RAG
-     few-shot (BLEU, ROUGE-L, BERTScore).
+     few-shot (BLEU, ROUGE-L). This is the core performance comparison:
+     MedGemma alone vs MedGemma augmented by the BiomedCLIP retriever.
 
-Each comparison is wrapped so a missing model/index degrades gracefully
-(e.g. the ColPali index only exists after running the Colab notebook).
+Each section degrades gracefully if a model or index is missing.
 
 Run:  python -m cxr.evaluation.compare
 """
@@ -42,24 +42,23 @@ def _markdown_table(rows: list[dict[str, Any]]) -> str:
     return "\n".join(lines) + "\n"
 
 
-# ── comparison 1: retrievers ──────────────────────────────────────────
-def compare_retrievers(qa_sample: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Score every available retriever on the QA sample."""
+# ── section 1: retriever evaluation ───────────────────────────────────
+def evaluate_retrievers(qa_sample: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Score the BiomedCLIP retriever on the QA sample."""
     rows: list[dict[str, Any]] = []
-    for name in ("biomedclip", "colpali"):
-        try:
-            retr = build_retriever(name)
-            retr.load_index()
-            rows.append(evaluate_retriever(retr, qa_sample))
-            print(f"  [{name}] scored on {len(qa_sample)} queries.")
-        except Exception as exc:  # noqa: BLE001 - skip retriever, keep the rest
-            print(f"  [{name}] skipped: {exc}")
+    try:
+        retr = build_retriever("biomedclip")
+        retr.load_index()
+        rows.append(evaluate_retriever(retr, qa_sample))
+        print(f"  [biomedclip] scored on {len(qa_sample)} queries.")
+    except Exception as exc:  # noqa: BLE001 - degrade gracefully
+        print(f"  [biomedclip] skipped: {exc}")
     return rows
 
 
-# ── comparison 2: report strategies ───────────────────────────────────
+# ── section 2: report strategies ──────────────────────────────────────
 def compare_report_strategies(n_reports: int) -> list[dict[str, Any]]:
-    """Score MedGemma zero-shot vs RAG few-shot report generation."""
+    """Score MedGemma zero-shot vs MedGemma + RAG few-shot report generation."""
     from cxr.modes.report_generation import ReportGenerator
 
     # Only records whose X-ray image is available locally can be scored.
@@ -75,12 +74,12 @@ def compare_report_strategies(n_reports: int) -> list[dict[str, Any]]:
     generator = ReportGenerator()
     rows: list[dict[str, Any]] = []
 
-    # Zero-shot.
+    # MedGemma alone.
     preds = [generator.generate(r.load_image(), "zero_shot").report for r in records]
     rows.append({"strategy": "zero_shot", **evaluate_reports(preds, references)})
     print(f"  [zero_shot] scored on {len(records)} reports.")
 
-    # RAG few-shot (needs a retriever index).
+    # MedGemma + BiomedCLIP retrieval (few-shot context).
     try:
         retr = build_retriever()
         retr.load_index()
@@ -104,8 +103,8 @@ def main() -> None:
     qa = load_qa_dataset()
     qa_sample = rng.sample(qa, min(sample_size, len(qa)))
 
-    print("\n[1/2] Comparing retrievers ...")
-    retriever_rows = compare_retrievers(qa_sample)
+    print("\n[1/2] Evaluating the retriever ...")
+    retriever_rows = evaluate_retrievers(qa_sample)
 
     print("\n[2/2] Comparing report-generation strategies ...")
     # Report generation is slow on an M1; use a smaller sample.
@@ -119,9 +118,9 @@ def main() -> None:
     out.write_text(
         "# Model Comparison Results\n\n"
         f"_QA eval sample: {len(qa_sample)} questions._\n\n"
-        "## 1. Retriever comparison (QA mode)\n\n"
+        "## 1. Retriever evaluation (BiomedCLIP)\n\n"
         + _markdown_table(retriever_rows)
-        + "\n## 2. Report-generation strategy comparison\n\n"
+        + "\n## 2. Report generation: MedGemma vs MedGemma + RAG\n\n"
         + _markdown_table(report_rows),
         encoding="utf-8",
     )

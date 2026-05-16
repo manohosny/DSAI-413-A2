@@ -20,10 +20,8 @@ mlx-vlm>=0.1.0 ; platform_system == "Darwin"
 # ── Retrieval ─────────────────────────────────────────────────────────
 open_clip_torch>=2.24.0          # BiomedCLIP retriever (local, lightweight)
 faiss-cpu>=1.8.0                 # single-vector index for BiomedCLIP
-# colpali-engine is heavy and only needed for the Colab notebook path.
-# Install it separately there:  pip install "colpali-engine>=0.3.0,<0.4.0"
 
-# ── QA dataset generation (Gemini) ────────────────────────────────────
+# ── QA dataset generation (optional Gemini backend) ───────────────────
 google-genai>=0.3.0
 
 # ── Evaluation metrics ────────────────────────────────────────────────
@@ -37,3 +35,6 @@ kaggle>=1.6.0
 
 # ── Demo app ──────────────────────────────────────────────────────────
 streamlit>=1.36.0
+
+# ── Tests ─────────────────────────────────────────────────────────────
+pytest>=8.0.0

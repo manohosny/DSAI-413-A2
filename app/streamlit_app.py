@@ -116,11 +116,6 @@ with qa_tab:
         "MedGemma answers grounded in them."
     )
 
-    retriever_name = st.selectbox(
-        "Retriever",
-        ["biomedclip", "colpali"],
-        help="BiomedCLIP runs locally. ColPali needs an index built on Colab.",
-    )
     question = st.text_input(
         "Clinical question", placeholder="e.g. Is there evidence of pleural effusion?"
     )
@@ -131,7 +126,7 @@ with qa_tab:
 
     if run_qa:
         try:
-            retriever = get_retriever(retriever_name)
+            retriever = get_retriever(CONFIG.retrieval.active)
         except FileNotFoundError as exc:
             st.error(f"{exc}")
             st.stop()

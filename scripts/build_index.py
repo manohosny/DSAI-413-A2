@@ -1,11 +1,9 @@
-"""Build a retrieval index over the report corpus (the QA knowledge base).
+"""Build the BiomedCLIP retrieval index over the report corpus
+(the QA knowledge base).
 
 Usage:
-    python scripts/build_index.py                      # active retriever (config.yaml)
-    python scripts/build_index.py --retriever biomedclip --limit 300
-    python scripts/build_index.py --retriever colpali   # GPU / Colab only
-
-BiomedCLIP runs fine on an M1; ColPali is heavy and meant for the Colab notebook.
+    python scripts/build_index.py
+    python scripts/build_index.py --limit 300
 """
 
 from __future__ import annotations
@@ -23,8 +21,7 @@ from cxr.models.retrievers import build_retriever  # noqa: E402
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build a RAG retrieval index.")
-    parser.add_argument("--retriever", default=None, choices=["biomedclip", "colpali"])
+    parser = argparse.ArgumentParser(description="Build the BiomedCLIP retrieval index.")
     parser.add_argument(
         "--limit", type=int, default=CONFIG.qa_generation.max_reports,
         help="Cap the number of reports indexed.",
@@ -34,7 +31,7 @@ def main() -> None:
     print(f"Loading up to {args.limit} reports ...")
     records = load_records(limit=args.limit)
 
-    retriever = build_retriever(args.retriever)
+    retriever = build_retriever()
     print(f"Building '{retriever.name}' index over {len(records)} reports ...")
     start = time.time()
     retriever.build_index(records)

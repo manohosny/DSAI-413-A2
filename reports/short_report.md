@@ -4,8 +4,7 @@
 **System:** Dual-mode (Report Generation + RAG-based QA) chest X-ray AI
 
 > Quantitative tables below were produced by `python -m cxr.evaluation.compare`
-> on the local 8GB M1 (BiomedCLIP retriever + MedGemma generator, MLX 4-bit).
-> ColPali rows and BERTScore are produced by the Colab notebooks (02/03).
+> on a local 8GB M1 (MedGemma generator via MLX 4-bit + BiomedCLIP retriever).
 
 ---
 
@@ -18,17 +17,18 @@ never share control flow:
 A chest X-ray is passed to MedGemma with a radiologist system prompt that
 requests a structured `FINDINGS` / `IMPRESSION` report. Two strategies:
 - `zero_shot` — MedGemma sees only the image.
-- `rag_fewshot` — a retriever finds visually similar X-rays; their reports are
-  injected as in-context examples before generation.
+- `rag_fewshot` — BiomedCLIP retrieves similar reports; they are injected as
+  in-context examples before generation.
 
 **Mode 2 — QA (RAG)** (`question → answer`)
-A clinical question is embedded and used to retrieve the top-k most relevant
-reports from the corpus (the knowledge base). MedGemma then answers **grounded**
-strictly in that retrieved context, with an explicit refusal contract when the
-context is insufficient. An X-ray image can optionally be attached.
+A clinical question is embedded with BiomedCLIP and used to retrieve the top-k
+most relevant reports from the corpus (the knowledge base). MedGemma then
+answers **grounded** strictly in that retrieved context, with an explicit
+refusal contract when the context is insufficient. An X-ray image can
+optionally be attached.
 
 ```
-config.yaml ─► config.py ─► { data loader, MedGemma, retrievers }
+config.yaml ─► config.py ─► { data loader, MedGemma, BiomedCLIP }
                                    │
               ┌────────────────────┼─────────────────────┐
          Mode 1 (report)      Mode 2 (RAG QA)        Evaluation
@@ -38,24 +38,23 @@ config.yaml ─► config.py ─► { data loader, MedGemma, retrievers }
 
 A deliberate engineering constraint shaped the design: the target machine is an
 **8GB M1 Mac**. Because `bitsandbytes` 4-bit quantization is CUDA-only, MedGemma
-runs locally through **MLX** (4-bit, ~3GB). ColPali is too heavy for 8GB, so it
-is indexed in a Colab notebook; BiomedCLIP — small and domain-tuned — powers the
-local demo. This "split execution" keeps every assignment requirement runnable.
+runs locally through **MLX** (4-bit, ~3GB). BiomedCLIP is small and domain-tuned,
+so it runs comfortably alongside it; models are lazy-loaded one at a time so the
+whole pipeline fits in 8GB.
 
 ## 2. Model choices
 
+Two models are used and compared, each playing a distinct role:
+
 | Model | Role | Why chosen |
 |-------|------|-----------|
-| **MedGemma-4B-it** | VLM generator (reports + answers) | Mandatory; medical-domain VLM, strong single-image CXR understanding |
-| **ColPali v1.3** | Multi-vector retriever | Mandatory; ColBERT-style late interaction over rendered report pages |
-| **BiomedCLIP** | Single-vector retriever | Replaces vanilla CLIP — domain-tuned on 15M PubMed pairs, light enough for 8GB |
-| **MedGemma (text-only)** | Offline QA-pair generation | Default QA backend — no API key, reproducible, medically grounded (see §3) |
+| **MedGemma-4B-it** | Vision-language generator (reports + answers) | Medical-domain VLM with strong single-image CXR understanding |
+| **BiomedCLIP** | Single-vector retriever (QA mode + RAG few-shot) | A CLIP variant domain-tuned on 15M PubMed image-caption pairs — far better than vanilla CLIP on radiology, and light enough for 8GB |
 
-ColPali was trained on **document-page screenshots**, not X-ray pixels — hence
-the assignment's "might need fine-tune" note. Rather than fine-tune (GPU-heavy,
-out of scope for 8GB), reports are **rendered as page images** so ColPali
-receives the input modality it expects; the mismatch on raw X-rays is documented
-as a comparison finding.
+MedGemma also doubles as the **QA-pair generator** (text-only) when building the
+dataset — see §3. The two models are compared in §4: the retriever is evaluated
+on the QA task (§4.1), and the report-generation comparison (§4.2) measures the
+*performance gain BiomedCLIP contributes* to MedGemma.
 
 ## 3. QA dataset creation
 
@@ -83,19 +82,18 @@ grounded answers correctly — e.g. *"Is there evidence of pneumonia?"* →
 The `source_study_id` is the key design choice: it is **ground truth for
 retrieval evaluation** — a retrieval is correct when the source report appears in
 the top-k. The dataset is therefore both the QA eval set and the retrieval
-benchmark, with no manual labelling. Build: `notebooks/01_qa_dataset_creation.ipynb`.
+benchmark, with no manual labelling. Build:
+`from cxr.data.qa_builder import build_qa_dataset; build_qa_dataset()`.
 
-## 4. Comparison results
+## 4. Results
 
-### 4.1 Retriever comparison (QA mode)
+### 4.1 Retriever evaluation (BiomedCLIP, QA mode)
 
 | Retriever | Recall@1 | Recall@3 | Recall@5 | MRR | Avg latency (s) |
 |-----------|----------|----------|----------|-----|-----------------|
 | BiomedCLIP | 0.00 | 0.06 | 0.14 | 0.046 | 0.319 |
-| ColPali    | *Colab* | *Colab* | *Colab* | *Colab* | *Colab* |
 
-*Run: 50-question sample over a 300-report index. ColPali's index is built in
-notebook 02 (Colab) — its 3B base is too heavy for the 8GB M1.*
+*Run: 50-question sample over a 300-report index.*
 
 **Reading the numbers — low recall is itself a finding, not a bug.** The
 synthetic questions are deliberately generic ("Are there pleural effusions?",
@@ -107,18 +105,18 @@ since *any* report containing the queried finding is valid grounding context.
 The lesson: exact-source Recall@k *under-measures* RAG quality for
 generic-question datasets; a finding-overlap metric would score it more fairly.
 
-### 4.2 Report-generation strategy comparison
+### 4.2 Report-generation comparison — MedGemma vs MedGemma + BiomedCLIP
 
 | Strategy | BLEU | ROUGE-L |
 |----------|------|---------|
-| zero_shot   | 2.95 | 0.251 |
-| rag_fewshot | **6.66** | **0.297** |
+| zero_shot (MedGemma alone)          | 2.95 | 0.251 |
+| rag_fewshot (MedGemma + BiomedCLIP) | **6.66** | **0.297** |
 
-*Run: 10 reports with locally-available X-rays. BERTScore omitted on the 8GB M1
-(`roberta-large` + MedGemma exceed memory); it is computed in the Colab notebook.*
+*Run: 10 reports with locally-available X-rays.*
 
-**RAG few-shot more than doubled BLEU** (2.95 → 6.66) and lifted ROUGE-L
-(0.251 → 0.297). Injecting retrieved similar reports as in-context examples
+This is the core model comparison: it isolates the **performance contribution of
+BiomedCLIP**. Adding BiomedCLIP-retrieved reports as in-context examples **more
+than doubled BLEU** (2.95 → 6.66) and lifted ROUGE-L (0.251 → 0.297) — retrieval
 measurably steers MedGemma toward the corpus's reporting style and vocabulary.
 Absolute BLEU is low — expected for chest-X-ray report generation, where reports
 are short and lexically varied (published CXR BLEU-4 is typically 5–15); the
@@ -127,18 +125,18 @@ can also mislead generation — a documented limitation.
 
 ## 5. Limitations & insights
 
-- **Hardware dominated the design.** 8GB RAM forced MLX 4-bit quantization, lazy
-  single-model loading, and offloading ColPali to Colab. Two M1-specific issues
-  surfaced and were fixed: the multimodal prefill tripped the Metal GPU watchdog
+- **Hardware dominated the design.** 8GB RAM forced MLX 4-bit quantization and
+  lazy single-model loading. Two M1-specific issues surfaced and were fixed: the
+  multimodal prefill tripped the Metal GPU watchdog
   (`kIOGPUCommandBufferCallbackErrorTimeout`) until `mx.clear_cache()` was called
   before each image pass, and `faiss` + `torch` each vendor `libomp` (resolved
   with `KMP_DUPLICATE_LIB_OK`). MedGemma image inference runs ~28s/report locally.
 - **Retrieval metric.** Exact-source Recall@k under-measures RAG quality for the
   generic synthetic questions (see §4.1); a finding-overlap metric would be fairer.
-- **CLIP text-text retrieval** (question → report) is weaker than its cross-modal
-  (image → report) use; ColPali's late interaction partly addresses this.
+- **Text-text retrieval** (question → report) is intrinsically harder than
+  cross-modal (image → report) matching for a CLIP-style single-vector model.
 - **MedGemma-generated QA** is simpler in phrasing than a frontier model would
   produce, but is reproducible, offline, and medically grounded.
-- **Evaluation is automatic** (BLEU/ROUGE/BERTScore, Recall@k/MRR) — it correlates
+- **Evaluation is automatic** (BLEU/ROUGE, Recall@k/MRR) — it correlates
   imperfectly with clinical correctness; a radiologist review would be the next step.
 - Generated reports/answers are **not clinically validated**.

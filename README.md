@@ -5,7 +5,7 @@ A dual-mode medical AI system for chest X-rays, built for **DSAI 413 – Assignm
 | Mode | Input → Output | Models |
 |------|----------------|--------|
 | **Report Generation** | X-ray image → structured radiology report | MedGemma-4B (+ optional RAG few-shot) |
-| **QA (RAG)** | clinical question → grounded answer | BiomedCLIP / ColPali retriever + MedGemma generator |
+| **QA (RAG)** | clinical question → grounded answer | BiomedCLIP retriever + MedGemma generator |
 
 The two modes are fully independent — each has its own pipeline, CLI script,
 and Streamlit tab.
@@ -17,34 +17,31 @@ and Streamlit tab.
 ## Architecture
 
 ```
-                ┌──────────────────────── MODE 1: REPORT GENERATION ───────────────────┐
-  X-ray image ──┤  [zero_shot]   image ─────────────────────────────► MedGemma ► report │
-                │  [rag_fewshot] image ► retriever ► similar reports ► MedGemma ► report │
-                └───────────────────────────────────────────────────────────────────────┘
+              ┌──────────────── MODE 1: REPORT GENERATION ──────────────────┐
+  X-ray image ┤ [zero_shot]   image ─────────────────────────► MedGemma ► report │
+              │ [rag_fewshot] image ► BiomedCLIP ► reports ──► MedGemma ► report │
+              └──────────────────────────────────────────────────────────────┘
 
-                ┌──────────────────────── MODE 2: QA (RAG) ────────────────────────────┐
-  question ─────┤  question ► retriever ► top-k report context ► MedGemma ► answer      │
-  (+ opt image) │                         (BiomedCLIP | ColPali)                        │
-                └───────────────────────────────────────────────────────────────────────┘
+              ┌──────────────── MODE 2: QA (RAG) ───────────────────────────┐
+  question ───┤ question ► BiomedCLIP ► top-k report context ► MedGemma ► answer │
+  (+ opt img) └──────────────────────────────────────────────────────────────┘
 ```
 
 **Models & roles**
 
 | Model | Role | Runs on |
 |-------|------|---------|
-| `google/medgemma-4b-it` | Vision-language generator (reports + answers) | M1 via **MLX 4-bit**; Colab via transformers |
-| `microsoft/BiomedCLIP-...` | Single-vector retriever (domain-tuned) | M1 (lightweight) |
-| `vidore/colpali-v1.3` | Multi-vector retriever (rendered report pages) | Colab GPU |
-| MedGemma (text-only) | Offline QA-pair generation | M1 — **default** backend, no API key |
+| `google/medgemma-4b-it` | Vision-language generator (reports + answers) | M1 via **MLX 4-bit** |
+| `microsoft/BiomedCLIP-...` | Single-vector retriever (domain-tuned on PubMed) | M1 (lightweight) |
+| MedGemma (text-only) | Offline QA-pair generation — **default**, no API key | M1 |
 | Gemini API | Offline QA-pair generation (optional alternative) | API only |
 
-### Why a "split execution" design?
+### Designed for an 8GB M1 Mac
 
-The target machine is an **8GB M1 Mac**. `bitsandbytes` 4-bit quantization is
-CUDA-only, so MedGemma runs locally via **MLX** (4-bit, ~3GB). ColPali (3B base,
-multi-vector) is too heavy for 8GB, so its index is built in a **Colab notebook**
-and downloaded back. BiomedCLIP is small enough to power the live demo. ColPali's
-weight/latency on consumer hardware is itself part of the model comparison.
+`bitsandbytes` 4-bit quantization is CUDA-only, so MedGemma runs locally via
+**MLX** (4-bit, ~3GB). BiomedCLIP is a small, domain-tuned CLIP variant that
+runs comfortably alongside it. Models are lazy-loaded one at a time so the
+whole pipeline — both modes plus the Streamlit demo — fits in 8GB.
 
 ---
 
@@ -56,14 +53,12 @@ src/cxr/
   data/loader.py         # MIMIC-CXR loading, auto-detects CSV columns
   data/qa_builder.py     # QA-pair generation (MedGemma | Gemini backend)
   models/medgemma.py     # MedGemma wrapper (MLX | transformers backends)
-  models/retrievers.py   # BiomedCLIP + ColPali behind one interface
+  models/retrievers.py   # BiomedCLIP retriever
   modes/report_generation.py   # Mode 1
   modes/qa_rag.py              # Mode 2
   evaluation/            # report_eval, retrieval_eval, compare
-  utils/rendering.py     # report text → page image (for ColPali)
 app/streamlit_app.py     # dual-mode demo
 scripts/                 # download_data, build_index, run_report_gen, run_qa
-notebooks/               # 01 QA dataset · 02 ColPali (Colab) · 03 comparison
 reports/short_report.md  # architecture + comparison write-up
 ```
 
@@ -98,11 +93,11 @@ All knobs (models, paths, sample sizes) live in [`config.yaml`](config.yaml).
 # 1. Download the MIMIC-CXR dataset (prints the detected schema)
 python scripts/download_data.py
 
-# 2. Build the QA dataset from the reports (MedGemma backend) — or run notebook 01
+# 2. Build the QA dataset from the reports (local MedGemma backend)
 python -c "from cxr.data.qa_builder import build_qa_dataset; build_qa_dataset()"
 
-# 3. Build the retrieval index (BiomedCLIP, local)
-python scripts/build_index.py --retriever biomedclip
+# 3. Build the BiomedCLIP retrieval index
+python scripts/build_index.py
 
 # 4. Mode 1 — Report Generation
 python scripts/run_report_gen.py --image path/to/xray.jpg
@@ -117,10 +112,6 @@ streamlit run app/streamlit_app.py
 # 7. Model comparison → reports/comparison_results.md
 python -m cxr.evaluation.compare
 ```
-
-**ColPali** is built on Colab — open
-[`notebooks/02_colpali_indexing_colab.ipynb`](notebooks/02_colpali_indexing_colab.ipynb),
-run it on a T4, download `colpali_index.zip`, and unzip into `data/index/colpali/`.
 
 ```bash
 pytest -q          # lightweight smoke tests (no GPU / no weights needed)
@@ -142,6 +133,6 @@ Full method: [`reports/short_report.md`](reports/short_report.md).
 ## Limitations
 
 - 8GB RAM makes local MedGemma inference slow; the demo lazy-loads one model at a time.
-- ColPali is trained on document screenshots — report pages are rendered for it,
-  and it is not optimized for raw X-ray pixels (see the comparison).
+- The synthetic QA questions are generic, so exact-source retrieval recall is
+  low by construction (see the comparison write-up).
 - Generated reports and answers are **not clinically validated**.
