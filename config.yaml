@@ -1,0 +1,48 @@
+# ════════════════════════════════════════════════════════════════════
+# Multi-Modal Chest X-Ray Intelligence System — central configuration
+# Every module reads its settings from here via src/cxr/config.py.
+# ════════════════════════════════════════════════════════════════════
+
+paths:
+  data_raw: data/raw          # MIMIC-CXR images + reports CSV (gitignored)
+  data_qa: data/qa            # generated QA dataset (JSON)
+  data_index: data/index      # built retrieval indices (gitignored)
+
+dataset:
+  kaggle_slug: simhadrisadaram/mimic-cxr-dataset
+  # Column names are auto-detected by loader.py; these are fallback candidates.
+  image_col_candidates: [image_path, image, img_path, path, filename, dicom_id]
+  report_col_candidates: [text, report, findings, impression, caption]
+
+# ── MedGemma generator ────────────────────────────────────────────────
+medgemma:
+  # backend: "mlx" (Apple Silicon, 4-bit) or "transformers" (CUDA/CPU).
+  backend: mlx
+  hf_model_id: google/medgemma-4b-it
+  mlx_model_id: mlx-community/medgemma-4b-it-4bit
+  max_new_tokens: 400
+  temperature: 0.0            # deterministic clinical output
+
+# ── Retrievers ────────────────────────────────────────────────────────
+retrieval:
+  # active retriever for the local app: "biomedclip" or "colpali"
+  active: biomedclip
+  top_k: 4
+  biomedclip:
+    model_id: hf-hub:microsoft/BiomedCLIP-PubMedBERT_256-vit_base_patch16_224
+  colpali:
+    model_id: vidore/colpali-v1.3   # used in the Colab notebook only
+
+# ── QA dataset generation (Gemini) ────────────────────────────────────
+qa_generation:
+  gemini_model: gemini-2.0-flash
+  pairs_per_report: 3
+  max_reports: 300            # cap for a manageable coursework-sized set
+
+# ── Evaluation ────────────────────────────────────────────────────────
+evaluation:
+  report_metrics: [bleu, rougeL, bertscore]
+  retrieval_k_values: [1, 3, 5]
+  sample_size: 50             # held-out items used for scoring
+
+seed: 42

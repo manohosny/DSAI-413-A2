@@ -1,0 +1,39 @@
+# ── Core ──────────────────────────────────────────────────────────────
+python-dotenv>=1.0.0
+pyyaml>=6.0
+tqdm>=4.66.0
+numpy>=1.26.0
+pandas>=2.1.0
+pillow>=10.0.0
+
+# ── Deep learning / models ────────────────────────────────────────────
+torch>=2.2.0
+transformers>=4.50.0
+huggingface_hub>=0.24.0
+accelerate>=0.30.0
+
+# ── Local (Apple Silicon / MLX) MedGemma backend ──────────────────────
+# Installed only on macOS; ignored / harmless elsewhere.
+mlx>=0.18.0 ; platform_system == "Darwin"
+mlx-vlm>=0.1.0 ; platform_system == "Darwin"
+
+# ── Retrieval ─────────────────────────────────────────────────────────
+open_clip_torch>=2.24.0          # BiomedCLIP retriever (local, lightweight)
+faiss-cpu>=1.8.0                 # single-vector index for BiomedCLIP
+# colpali-engine is heavy and only needed for the Colab notebook path.
+# Install it separately there:  pip install "colpali-engine>=0.3.0,<0.4.0"
+
+# ── QA dataset generation (Gemini) ────────────────────────────────────
+google-genai>=0.3.0
+
+# ── Evaluation metrics ────────────────────────────────────────────────
+sacrebleu>=2.4.0
+rouge-score>=0.1.2
+bert-score>=0.3.13
+nltk>=3.8.1
+
+# ── Data download ─────────────────────────────────────────────────────
+kaggle>=1.6.0
+
+# ── Demo app ──────────────────────────────────────────────────────────
+streamlit>=1.36.0

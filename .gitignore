@@ -1,0 +1,27 @@
+# ── Secrets ───────────────────────────────────────────────────────────
+.env
+kaggle.json
+
+# ── Data & artifacts (large / regenerable) ────────────────────────────
+data/raw/
+data/index/
+*.faiss
+*.npy
+*.pt
+
+# ── Python ────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.ipynb_checkpoints/
+
+# ── OS / editor ───────────────────────────────────────────────────────
+.DS_Store
+.idea/
+.vscode/
+
+# ── HuggingFace / model caches ────────────────────────────────────────
+.cache/
